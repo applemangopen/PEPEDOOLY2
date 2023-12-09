@@ -1,0 +1,12 @@
+# Dependencies
+/node_modules
+
+# Environment variables
+.env
+
+# 로그 파일 등
+/logs
+
+# 기타 개발 도구나 IDE 설정 파일 등
+.vscode/
+.idea/
