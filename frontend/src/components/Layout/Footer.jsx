@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const FooterStyle = styled.footer`
-  /* position: absolute; */
+  position: fixed;
+  bottom: 0;
   font-size: 15px;
   width: 100%;
   height: 350px;
@@ -12,8 +13,8 @@ const FooterStyle = styled.footer`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: relative;
-  transform: translateY(-100%);
+  /* position: relative; */
+  /* transform: translateY(-100%); */
 `;
 
 const Footer = () => {
