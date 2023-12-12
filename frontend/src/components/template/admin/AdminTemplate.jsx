@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  border: 3px solid black; // 경계선 스타일
+  border: 3px solid black;
 
   padding: 20px 300px;
   margin: 20px;

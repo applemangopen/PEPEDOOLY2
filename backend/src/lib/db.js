@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const entityList = [`../admin/model/admin`, `../admin/model/notice`];
+const entityList = [`../admin/admin`, `../notice/notice`];
 
 entityList.forEach((entity) => {
   const model = require(entity)(sequelize, Sequelize.DataTypes);
