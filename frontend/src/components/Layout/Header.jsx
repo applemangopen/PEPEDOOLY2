@@ -17,8 +17,8 @@ const Header = () => {
     <HeaderStyle>
       <div>
         <img
-          src={process.env.PUBLIC_URL + "/assets/pepedoooly.svg"}
-          alt="Pepedoooly"
+          src={process.env.PUBLIC_URL + "/assets/PepeDooly.svg"}
+          alt="PepeDoooly"
         />
         <a href="/">PepeDooly</a>
       </div>
