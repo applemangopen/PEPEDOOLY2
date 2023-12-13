@@ -1,22 +1,106 @@
+// import styled from "styled-components";
+// import Button from "../atoms/login/Button";
+// import Icon from "../atoms/login/Icon";
+// import Input from "../atoms/login/Input";
+// import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
+// import { useNavigate } from "react-router-dom";
+// //FaInstagram
+// function App() {
+//   const movePage = useNavigate();
+
+//   function goRegister() {
+//     movePage("/register");
+//   }
+//   const FacebookBackground =
+//     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
+//   const FaGithubBackground = "#000000";
+//   // "linear-gradient(to right, #000000 0%, #ED586C 40%, #F0A853 100%)";
+//   const TwitterBackground =
+//     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
+//   return (
+//     <MainContainer>
+//       <WelcomeText>
+//         <img src="./" alt="" />
+//         PepeDooly
+//       </WelcomeText>
+//       <InputContainer>
+//         <Input type="text" placeholder="Email" />
+//         <Input type="password" placeholder="Password" />
+//       </InputContainer>
+//       <ButtonContainer>
+//         <Button content="Sign Up" />
+//       </ButtonContainer>
+//       <LoginWith>OR LOGIN WITH</LoginWith>
+//       <HorizontalRule />
+//       <IconsContainer>
+//         <Icon color={FacebookBackground}>
+//           <FaFacebookF />
+//         </Icon>
+//         <Icon color={FaGithubBackground}>
+//           <FaGithub />
+//         </Icon>
+//         <Icon color={TwitterBackground}>
+//           <FaTwitter />
+//         </Icon>
+//       </IconsContainer>
+//       <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
+//     </MainContainer>
+//   );
+// }
+
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../atoms/login/Button";
 import Icon from "../atoms/login/Icon";
 import Input from "../atoms/login/Input";
-import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaGithub, FaEthereum } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-//FaInstagram
+import Web3 from "web3";
+import Web3Modal from "web3modal";
+import { Web3Auth } from "@web3auth/modal";
+
 function App() {
   const movePage = useNavigate();
+  const [web3, setWeb3] = useState(null);
+  const [accounts, setAccounts] = useState([]);
+
+  useEffect(() => {
+    async function loadWeb3() {
+      const web3Modal = new Web3Modal();
+      const provider = await web3Modal.connect();
+      const web3 = new Web3(provider);
+      setWeb3(web3);
+    }
+    loadWeb3();
+  }, []);
+
+  async function getAccounts() {
+    if (web3) {
+      const accs = await web3.eth.getAccounts();
+      setAccounts(accs);
+      // 여기서 로그인된 계정 정보를 활용하여 다양한 작업을 수행할 수 있습니다.
+    }
+  }
+
+  async function connectMetamask() {
+    const web3auth = new Web3Auth({
+      clientId: "YOUR_CLIENT_ID",
+      // 다른 설정들...
+    });
+
+    await web3auth.initModal();
+  }
 
   function goRegister() {
     movePage("/register");
   }
+
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
   const FaGithubBackground = "#000000";
-  // "linear-gradient(to right, #000000 0%, #ED586C 40%, #F0A853 100%)";
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
+
   return (
     <MainContainer>
       <WelcomeText>
@@ -41,6 +125,9 @@ function App() {
         </Icon>
         <Icon color={TwitterBackground}>
           <FaTwitter />
+        </Icon>
+        <Icon>
+          <FaEthereum onClick={connectMetamask} />
         </Icon>
       </IconsContainer>
       <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
