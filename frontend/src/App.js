@@ -1,6 +1,8 @@
 import Admin from "./components/page/Admin";
 import "./App.css";
-// import Comments from "./components/organisms/Comments";
+
+import Comments from "./components/organisms/comments/Comments";
+
 
 function App() {
   return (
