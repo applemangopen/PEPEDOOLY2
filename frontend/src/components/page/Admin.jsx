@@ -11,10 +11,9 @@ const PageContainer = styled.div`
 const Admin = () => {
   return (
     <PageContainer>
-      {/*      <Header></Header> */}
+      <Header></Header>
       <AdminTemplate />
-      {/*       <Footer></Footer>
-       */}{" "}
+      <Footer></Footer>
     </PageContainer>
   );
 };
