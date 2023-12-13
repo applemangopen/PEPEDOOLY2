@@ -8,7 +8,7 @@ const chatRouter = require("./chat/chat.router");
 const noticeRouter = require("./notice/notice.router");
 // const
 router.use("/admin", adminRouter);
-router.use("/notices", noticeRouter);
+router.use("/notice", noticeRouter);
 router.use("/users", userRouter);
 router.use("/boards", boardRouter);
 router.use("/comments", commentRouter);
