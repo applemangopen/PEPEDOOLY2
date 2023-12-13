@@ -5,6 +5,16 @@ import { Notice } from "../../molecules/admin/Notice";
 import { Manage } from "../../molecules/admin/Manage";
 import styled from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 3px solid black;
+
+  padding: 20px 300px;
+  margin: 20px;
+  justify-content: space-between;
+`;
+
 const MainContainer = styled.div`
   position: relative;
   display: flex;
@@ -33,16 +43,18 @@ const MenuTabs = () => {
   const [menu, setMenu] = useState("info");
 
   return (
-    <MainContainer>
-      <MenuContainer>
-        <TabBtn setMenu={setMenu} activeMenu={menu} />
-      </MenuContainer>
-      <UserInfoContainer>
-        {menu === "info" && <UserInfo />}
-        {menu === "notice" && <Notice />}
-        {menu === "manage" && <Manage />}
-      </UserInfoContainer>
-    </MainContainer>
+    <Container>
+      <MainContainer>
+        <MenuContainer>
+          <TabBtn setMenu={setMenu} activeMenu={menu} />
+        </MenuContainer>
+        <UserInfoContainer>
+          {menu === "info" && <UserInfo />}
+          {menu === "notice" && <Notice />}
+          {menu === "manage" && <Manage />}
+        </UserInfoContainer>
+      </MainContainer>{" "}
+    </Container>
   );
 };
 

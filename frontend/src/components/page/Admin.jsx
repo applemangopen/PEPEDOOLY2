@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
-import AdminTemplate from "../template/admin/AdminTemplate";
+import MenuTabs from "../organisms/admin/MenuTabs";
 import styled from "styled-components";
 
 const PageContainer = styled.div`
@@ -12,7 +12,7 @@ const Admin = () => {
   return (
     <PageContainer>
       <Header></Header>
-      <AdminTemplate />
+      <MenuTabs />
       <Footer></Footer>
     </PageContainer>
   );
