@@ -10,7 +10,7 @@ import Comments from "../organisms/comments/Comments";
 const Main = () => {
   return (
     <Routes>
-      <Route path="/" element={<Main />} />
+      {/* <Route path="/" element={<Main />} /> */}
       <Route path="/login" element={<Login />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/comments" element={<Comments />} />
