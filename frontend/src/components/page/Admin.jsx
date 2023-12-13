@@ -13,7 +13,6 @@ const Admin = () => {
     <PageContainer>
       <Header></Header>
       <MenuTabs />
-      <Footer></Footer>
     </PageContainer>
   );
 };
