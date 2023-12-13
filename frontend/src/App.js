@@ -1,15 +1,13 @@
 import Admin from "./components/page/Admin";
 import "./App.css";
-
-import Comments from "./components/organisms/comments/Comments";
-
+import Comments from "./components/organisms/Comments";
 
 function App() {
   return (
     <div className="App">
       {/* <Login /> */}
       <Admin />
-      {/* <Comments /> */}
+      <Comments />
     </div>
   );
 }
