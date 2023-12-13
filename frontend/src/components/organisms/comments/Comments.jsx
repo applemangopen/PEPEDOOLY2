@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CommentsForm from "../molecules/CommentsForm";
-import CommentsList from "../molecules/CommentsList";
+import CommentsForm from "../../molecules/comments/CommentsForm";
+import CommentsList from "../../molecules/comments/CommentsList";
 
 const getCookie = (name) => {
     const value = `; ${document.cookie}`;
