@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CommentsBtn from "../atoms/CommentsBtn";
-import CommentsInput from "../atoms/CommentsInput";
+import CommentsBtn from "../../atoms/comments/CommentsBtn";
+import CommentsInput from "../../atoms/comments/CommentsInput";
 
 export default function CommentsForm({ onAddComment }) {
     const [comment, setComment] = useState("");

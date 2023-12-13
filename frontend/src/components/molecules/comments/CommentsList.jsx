@@ -1,6 +1,6 @@
 import React from "react";
-import CommentsView from "../atoms/CommentsView";
-import CommentsBtn from "../atoms/CommentsBtn";
+import CommentsView from "../../atoms/comments/CommentsView";
+import CommentsBtn from "../../atoms/comments/CommentsBtn";
 
 export default function CommentsList({ comments, onDeleteComment, onEditComment }) {
     return (
