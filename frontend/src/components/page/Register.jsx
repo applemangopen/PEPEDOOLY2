@@ -3,14 +3,8 @@ import Button from "../atoms/login/Button";
 import Icon from "../atoms/login/Icon";
 import Input from "../atoms/login/Input";
 import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 //FaInstagram
 function App() {
-  const movePage = useNavigate();
-
-  function goRegister() {
-    movePage("/register");
-  }
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
   const FaGithubBackground = "#000000";
@@ -26,24 +20,12 @@ function App() {
       <InputContainer>
         <Input type="text" placeholder="Email" />
         <Input type="password" placeholder="Password" />
+        <Input type="name" placeholder="Name" />
+        <Input type="nickname" placeholder="Nickname" />
       </InputContainer>
       <ButtonContainer>
-        <Button content="Sign Up" />
+        <Button content="Register" />
       </ButtonContainer>
-      <LoginWith>OR LOGIN WITH</LoginWith>
-      <HorizontalRule />
-      <IconsContainer>
-        <Icon color={FacebookBackground}>
-          <FaFacebookF />
-        </Icon>
-        <Icon color={FaGithubBackground}>
-          <FaGithub />
-        </Icon>
-        <Icon color={TwitterBackground}>
-          <FaTwitter />
-        </Icon>
-      </IconsContainer>
-      <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
     </MainContainer>
   );
 }
@@ -104,11 +86,12 @@ const WelcomeText = styled.h2`
 `;
 
 const InputContainer = styled.div`
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 20%;
+  height: 50%;
   width: 100%;
 `;
 
