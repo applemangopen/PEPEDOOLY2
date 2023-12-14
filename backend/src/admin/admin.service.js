@@ -5,11 +5,11 @@ class AdminService {
   constructor(Admin) {
     this.admin = Admin;
   }
-  createAdmin() {}
+  async createAdmin() {}
 
-  getAdminById() {}
+  async getAdminById() {}
 
-  updateAdmin() {}
+  async updateAdmin() {}
 
-  deleteAdmin() {}
+  async deleteAdmin() {}
 }
