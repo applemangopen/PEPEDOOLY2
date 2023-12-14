@@ -21,8 +21,8 @@ const Main = () => {
       {/* 
       <Header />
       <Footer /> */}
-    </Routes>
-  );
+        </Routes>
+    );
 };
 
 export default Main;
