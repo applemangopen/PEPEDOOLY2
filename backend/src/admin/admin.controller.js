@@ -5,13 +5,23 @@ class AdminController {
   constructor(service) {
     this.service = service;
   }
-  login(req, res) {}
+  async login(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  getAdmin(req, res) {}
+  async getAdmin(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  postAdmin(req, res) {}
+  async putAdmin(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  putAdmin(req, res) {}
-
-  deleteAdmin(req, res) {}
+  async deleteAdmin(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 }

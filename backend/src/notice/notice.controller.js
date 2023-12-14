@@ -14,13 +14,28 @@ class NoticeController {
     this.service = service;
   }
 
-  async postNotice(req, res) {}
+  async postNotice(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  async getAllNotice(req, res) {}
+  async getAllNotice(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  async getNotice(req, res) {}
+  async getNotice(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  async putNotice(req, res) {}
+  async putNotice(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 
-  async deleteNotice(req, res) {}
+  async deleteNotice(req, res) {
+    const adminData = req.body;
+    console.log(adminData);
+  }
 }
