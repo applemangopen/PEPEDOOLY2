@@ -6,6 +6,7 @@ import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
 // import { SiWebtrees } from "react-icons/si";
 // import { Web3Auth } from "@web3auth/modal";
 import { useNavigate } from "react-router-dom";
+import Header from "../Layout/Header";
 //FaInstagram
 function App() {
   const movePage = useNavigate();
@@ -36,36 +37,39 @@ function App() {
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
   return (
-    <MainContainer>
-      <WelcomeText>
-        <img src="./" alt="" />
-        PepeDooly
-      </WelcomeText>
-      <InputContainer>
-        <Input type="text" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
-      </InputContainer>
-      <ButtonContainer>
-        <Button content="Sign Up" />
-      </ButtonContainer>
-      <LoginWith>OR LOGIN WITH</LoginWith>
-      <HorizontalRule />
-      <IconsContainer>
-        <Icon color={FacebookBackground}>
-          <FaFacebookF />
-        </Icon>
-        <Icon color={FaGithubBackground}>
-          <FaGithub />
-        </Icon>
-        <Icon color={TwitterBackground}>
-          <FaTwitter />
-        </Icon>
-        {/* <Icon color={TwitterBackground}>
+    <>
+      <Header />
+      <MainContainer>
+        <WelcomeText>
+          <img src="./" alt="" />
+          PepeDooly
+        </WelcomeText>
+        <InputContainer>
+          <Input type="text" placeholder="Email" />
+          <Input type="password" placeholder="Password" />
+        </InputContainer>
+        <ButtonContainer>
+          <Button content="Login" />
+        </ButtonContainer>
+        <LoginWith>OR LOGIN WITH</LoginWith>
+        <HorizontalRule />
+        <IconsContainer>
+          <Icon color={FacebookBackground}>
+            <FaFacebookF />
+          </Icon>
+          <Icon color={FaGithubBackground}>
+            <FaGithub />
+          </Icon>
+          <Icon color={TwitterBackground}>
+            <FaTwitter />
+          </Icon>
+          {/* <Icon color={TwitterBackground}>
           <SiWebtrees onClick={() => web3auth.connect()} />
         </Icon> */}
-      </IconsContainer>
-      <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
-    </MainContainer>
+        </IconsContainer>
+        <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
+      </MainContainer>
+    </>
   );
 }
 
