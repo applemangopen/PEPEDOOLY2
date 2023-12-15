@@ -1,44 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import TabBtn from "../../molecules/admin/TabBtn";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  width: 16%;
+  flex-direction: column;
   border: 3px solid black;
   padding: 20px;
-  /* margin: 20px; */
-  height: 100vh;
+  align-items: center;
 `;
 
-const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  border-right: 2px solid black;
-  padding-right: 20px;
-`;
-
-const MainContainer = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  padding-left: 20px;
-`;
-
-const SideBar = () => {
-  const [menu, setMenu] = useState("info");
-
+const SideBar = ({ setMenu }) => {
   return (
     <Container>
-      <MenuContainer>
-        <TabBtn setMenu={setMenu} activeMenu={menu} />
-      </MenuContainer>
-      <MainContainer>
-        {/* {menu === "info" && <UserInfo />}
-        {menu === "notice" && <Notice />}
-        {menu === "manage" && <Manage />} */}
-      </MainContainer>
+      <TabBtn setMenu={setMenu} />
     </Container>
   );
 };

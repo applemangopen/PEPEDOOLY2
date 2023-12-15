@@ -3,20 +3,24 @@ import Header from "../../Layout/Header";
 import BodyContainer from "./BodyContainer";
 import styled from "styled-components";
 
-const MainContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
 `;
-
-const MainTemplate = () => {
+const StyledFooter = styled(Footer)`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
+const MainContainer = ({ menu }) => {
   return (
-    <MainContainer>
+    <Container>
       <Header />
-      <BodyContainer />
-      <Footer />
-    </MainContainer>
+      <BodyContainer menu={menu} />
+      <StyledFooter />
+    </Container>
   );
 };
-export default MainTemplate;
+export default MainContainer;
