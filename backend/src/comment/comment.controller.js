@@ -24,6 +24,27 @@ class CommentController {
             next(e);
         }
     }
+
+    async updateComment(req, res, next) {
+        try {
+            const { commentId } = req.params;
+            const updateData = req.body;
+            const updatedComment = await this.service.updateComment(commentId, updateData);
+            return res.status(200).json(updatedComment);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async deleteComment(req, res, next) {
+        try {
+            const { commentId } = req.params;
+            await this.service.deleteComment(commentId);
+            return res.status(204).send();
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = CommentController;
