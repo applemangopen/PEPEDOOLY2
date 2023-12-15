@@ -5,7 +5,7 @@ class CommentController {
         this.service = service;
     }
 
-    async postComments(req, res, next) {
+    async postComment(req, res, next) {
         try {
             const commentCreateRequestDTO = new CommentCreateRequestDTO(req);
             const result = await this.service.createComment(commentCreateRequestDTO);
