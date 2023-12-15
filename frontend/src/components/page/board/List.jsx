@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import "./List.css"; // PostCSS 파일 임포트
+import styles from "./List.module.css";
+import { Link } from "react-router-dom";
 
 export default function List() {
   const [posts, setPosts] = useState(examplePosts);
   return (
-    <div className="board">
+    <div className={styles.board}>
       <h1>게시판</h1>
-      <div className="posts">
+      <div className={styles.posts}>
         {posts.map((post) => (
-          <div key={post.id} className="post">
-            <img
-              src={post.images[0]}
-              alt={`Post ${post.id}`}
-              className="post-image"
-            />
-            <div className="post-info">
-              <h2 className="title">{post.title}</h2>
-              <p className="writer">작성자: {post.writer}</p>
-              <p className="likes">좋아요: {post.likes}</p>
-              <p className="views">조회수: {post.views}</p>
+          <div key={post.id} className={styles.post}>
+            <Link to={`/board/view/${post.id}`}>
+              <img
+                src={post.images[0]}
+                alt={`Post ${post.id}`}
+                className={styles["post-image"]}
+              />
+              <h2 className={styles.title}>{post.title}</h2>
+            </Link>
+            <div className={styles["post-info"]}>
+              <p className={styles.writer}>작성자: {post.writer}</p>
+              <p className={styles.likes}>좋아요: {post.likes}</p>
+              <p className={styles.views}>조회수: {post.views}</p>
             </div>
           </div>
         ))}
@@ -26,6 +29,8 @@ export default function List() {
     </div>
   );
 }
+
+// examplePosts는 이전과 동일하게 유지
 
 const examplePosts = [
   {
