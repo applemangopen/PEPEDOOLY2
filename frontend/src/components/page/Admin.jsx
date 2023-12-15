@@ -1,24 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../organisms/admin/SideBar";
 import MainContainer from "../organisms/admin/MainContainer";
 import styled from "styled-components";
 
 const PageContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    height: calc(100vh - 여백의 높이);
-    overflow: auto;
+  display: flex;
 `;
 
 const Admin = () => {
-    return (
-        <>
-            <PageContainer>
-                <SideBar />
-                <MainContainer />
-            </PageContainer>
-        </>
-    );
+  const [menu, setMenu] = useState("info");
+
+  return (
+    <>
+      <PageContainer>
+        <SideBar setMenu={setMenu} />
+        <MainContainer menu={menu} />
+      </PageContainer>
+    </>
+  );
 };
 
 export default Admin;

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const HeaderStyle = styled.nav`
-  /* position: */
   top: 0;
   font-size: 15px;
   width: 100%;
