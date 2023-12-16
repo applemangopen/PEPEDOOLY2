@@ -25,3 +25,5 @@ class AdminController {
         console.log(adminData);
     }
 }
+
+module.exports = AdminController;
