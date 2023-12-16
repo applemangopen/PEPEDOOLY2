@@ -6,7 +6,7 @@ const boardRouter = require("./board/board.router");
 const commentRouter = require("./comment/comment.router");
 const chatRouter = require("./chat/chat.router");
 const noticeRouter = require("./notice/notice.router");
-// const
+
 router.use("/admin", adminRouter);
 router.use("/notice", noticeRouter);
 router.use("/users", userRouter);

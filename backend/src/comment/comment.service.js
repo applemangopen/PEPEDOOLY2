@@ -16,16 +16,6 @@ class CommentService {
                 ParentCommentId: requestDTO.ParentCommentId,
             });
 
-            const foundComment = await this.commentRepository.findOne({
-                where: { Comments_uid: createdComment.Comments_uid },
-                include: [
-                    {
-                        model: db.User,
-                        attributes: ["nickname", "profile"],
-                    },
-                ],
-            });
-
             return new CommentResponseDTO(comment);
         } catch (e) {
             throw e;
@@ -63,6 +53,25 @@ class CommentService {
         } catch (e) {
             throw e;
         }
+    }
+
+    async updateComment(commentId, updateData) {
+        const comment = await this.commentRepository.findByPk(commentId);
+        if (!comment) {
+            throw new Error("Comment not found");
+        }
+
+        await comment.update(updateData);
+        return comment;
+    }
+
+    async deleteComment(commentId) {
+        const comment = await this.commentRepository.findByPk(commentId);
+        if (!comment) {
+            throw new Error("Comment not found");
+        }
+
+        await comment.destroy();
     }
 }
 
