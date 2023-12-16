@@ -3,76 +3,76 @@ const db = require("../lib/db");
 const { CommentResponseDTO } = require("./dto/comment.response.dto");
 
 class CommentService {
-    constructor(Comment) {
-        this.commentRepository = Comment;
+  constructor(Comment) {
+    this.commentRepository = Comment;
+  }
+
+  async createComment(requestDTO) {
+    try {
+      const comment = await this.commentRepository.create({
+        Comments_content: requestDTO.Comments_content,
+        Users_uid: requestDTO.Users_uid,
+        Boards_id: requestDTO.Boards_id,
+        ParentCommentId: requestDTO.ParentCommentId,
+      });
+
+      return new CommentResponseDTO(comment);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async getComments(boardId) {
+    try {
+      const comments = await this.commentRepository.findAll({
+        include: [
+          {
+            model: db.User,
+            attributes: ["nickname", "profile"],
+          },
+          {
+            model: this.commentRepository,
+            as: "Replies",
+            include: [
+              {
+                model: db.User,
+                attributes: ["nickname", "profile"],
+              },
+            ],
+          },
+        ],
+        where: {
+          Boards_id: boardId,
+          // ParentCommentId: null,
+          // 대댓글도 지금은 같이 조회하는데 위의 조건 넣으면 대댓글은 일단 조회를 안하고 따로 불러올 수 있음
+        },
+        order: [["Comments_created_at", "DESC"]],
+      });
+
+      return comments.map((comment) => new CommentViewResponseDTO(comment));
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async updateComment(commentId, updateData) {
+    const comment = await this.commentRepository.findByPk(commentId);
+    if (!comment) {
+      throw new Error("Comment not found");
     }
 
-    async createComment(requestDTO) {
-        try {
-            const comment = await this.commentRepository.create({
-                Comments_content: requestDTO.Comments_content,
-                Users_uid: requestDTO.Users_uid,
-                Boards_id: requestDTO.Boards_id,
-                ParentCommentId: requestDTO.ParentCommentId,
-            });
+    await comment.update(updateData);
+    return comment;
+  }
 
-            return new CommentResponseDTO(comment);
-        } catch (e) {
-            throw e;
-        }
+  async deleteComment(commentId) {
+    const comment = await this.commentRepository.findByPk(commentId);
+    if (!comment) {
+      throw new Error("Comment not found");
     }
 
-    async getComments(boardId) {
-        try {
-            const comments = await this.commentRepository.findAll({
-                include: [
-                    {
-                        model: db.User,
-                        attributes: ["nickname", "profile"],
-                    },
-                    {
-                        model: this.commentRepository,
-                        as: "Replies",
-                        include: [
-                            {
-                                model: db.User,
-                                attributes: ["nickname", "profile"],
-                            },
-                        ],
-                    },
-                ],
-                where: {
-                    Boards_id: boardId,
-                    // ParentCommentId: null,
-                    // 대댓글도 지금은 같이 조회하는데 위의 조건 넣으면 대댓글은 일단 조회를 안하고 따로 불러올 수 있음
-                },
-                order: [["Comments_created_at", "DESC"]],
-            });
-
-            return comments.map((comment) => new CommentViewResponseDTO(comment));
-        } catch (e) {
-            throw e;
-        }
-    }
-
-    async updateComment(commentId, updateData) {
-        const comment = await this.commentRepository.findByPk(commentId);
-        if (!comment) {
-            throw new Error("Comment not found");
-        }
-
-        await comment.update(updateData);
-        return comment;
-    }
-
-    async deleteComment(commentId) {
-        const comment = await this.commentRepository.findByPk(commentId);
-        if (!comment) {
-            throw new Error("Comment not found");
-        }
-
-        await comment.destroy();
-    }
+    await comment.destroy();
+  }
 }
 
 module.exports = CommentService;
