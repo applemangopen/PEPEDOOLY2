@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Button from "../atoms/login/Button";
 import Icon from "../atoms/login/Icon";
 import Input from "../atoms/login/Input";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
 // import { SiWebtrees } from "react-icons/si";
 // import { Web3Auth } from "@web3auth/modal";
@@ -9,26 +11,44 @@ import { useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
 //FaInstagram
 function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const movePage = useNavigate();
+
+  function handleEmailChange(event) {
+    console.log(event.target.value);
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    console.log(event.target.value);
+    setPassword(event.target.value);
+  }
 
   function goRegister() {
     movePage("/register");
   }
 
-  // const web3auth = new Web3Auth({
-  //   clientId:
-  //     "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw4tsluTITPqA8zMsfxIKMjiqNQ", // Get your Client ID from the Web3Auth Dashboard
-  //   web3AuthNetwork: "sapphire_mainnet", // Web3Auth Network
-  //   chainConfig: {
-  //     chainNamespace: "eip155",
-  //     chainId: "0x1",
-  //     rpcTarget: "https://rpc.ankr.com/eth",
-  //     displayName: "Ethereum Mainnet",
-  //     blockExplorer: "https://goerli.etherscan.io",
-  //     ticker: "ETH",
-  //     tickerName: "Ethereum",
-  //   },
-  // });
+  function loginUser(email, password) {
+    const loginData = {
+      email: email,
+      password: password,
+    };
+    console.log(loginData);
+
+    axios
+      .post("http://localhost:4000/users/login", loginData, {
+        withCredentials: "include",
+      })
+      .then((response) => {
+        // 로그인 성공 시 처리
+        console.log("로그인 성공", response);
+      })
+      .catch((error) => {
+        // 로그인 실패 시 처리
+        console.error("로그인 실패", error);
+      });
+  }
 
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
@@ -39,14 +59,32 @@ function App() {
   return (
     <>
       <Header />
-      <MainContainer>
+      <MainContainer
+        onSubmit={(e) => {
+          e.preventDefault();
+          const { email: userEmail, password: userPassword } = e.target;
+          loginUser(userEmail.value, userPassword.value);
+        }}
+      >
         <WelcomeText>
           <img src="./" alt="" />
           PepeDooly
         </WelcomeText>
         <InputContainer>
-          <Input type="text" placeholder="Email" />
-          <Input type="password" placeholder="Password" />
+          <Input
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
         </InputContainer>
         <ButtonContainer>
           <Button content="Login" />
@@ -73,7 +111,7 @@ function App() {
   );
 }
 
-const MainContainer = styled.div`
+const MainContainer = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
