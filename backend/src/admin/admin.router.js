@@ -7,8 +7,7 @@ const getAdmin = adminController.getAdmin.bind(adminController);
 const putAdmin = adminController.putAdmin.bind(adminController);
 const deleteAdmin = adminController.deleteAdmin.bind(adminController);
 
-adminRouter.get("/:provider", login);
-adminRouter.post("/:provider", login);
+adminRouter.post("/login", login);
 adminRouter.get("/:uid", getAdmin);
 adminRouter.put("/:uid", putAdmin);
 adminRouter.delete("/:uid", deleteAdmin);

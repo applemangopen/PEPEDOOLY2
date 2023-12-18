@@ -12,6 +12,10 @@ class NoticeController {
 
   async postNotice(req, res, next) {
     try {
+      const adminId = req.admin && req.admin.Admin_id;
+      if (!adminId) {
+        throw new Error("Invalid admin ID");
+      }
       const noticeCreateRequestDTO = new NoticeCreateRequestDTO(
         req.body,
         req.admin

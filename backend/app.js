@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const router = require("./src/index");
 const cookieParser = require("cookie-parser");
+const { adminAuth } = require("./src/lib/jwtAuthMiddleware");
 
 // app.use(cors());
 app.use(express.json());
@@ -17,7 +18,7 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(adminAuth);
 app.use(router);
 
 app.use((error, req, res, next) => {
