@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 const MenuButton = styled.button`
   display: block;
-  width: 100%;
-  height: 50px;
+  width: 90%;
+  height: 100px;
   border: 1px solid #000;
   background-color: #fff;
   margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 28px;
   cursor: pointer;
   &:hover {
     background-color: #f2f2f2;

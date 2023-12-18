@@ -9,7 +9,12 @@ class CommentResponseDTO extends BaseDTO {
 
     constructor(comment) {
         super();
-        // 필요한 데이터를 comment 객체로부터 추출하여 할당
+        this.Comments_uid = comment.Comments_uid;
+        this.Comments_content = comment.Comments_content;
+        this.Comments_created_at = comment.Comments_created_at;
+
+        // this.UserNickname = comment.UserNickname;
+        // this.UserProfile = comment.UserProfile;
     }
 }
 

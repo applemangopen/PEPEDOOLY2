@@ -1,26 +1,100 @@
-const db = require("../lib/db");
 const {
   NoticeCreateRequestDTO,
-  NoticeCreateResponseDTO,
   NoticeFindRequestDTO,
-  NoticeFindAllResponseDTO,
-  NoticeFindResponseDTO,
   NoticeUpdateRequestDTO,
   NoticeDeleteRequestDTO,
+  NoticeCreateResponseDTO,
+  NoticeFindAllResponseDTO,
+  NoticeFindResponseDTO,
 } = require("./dto/notice.dto");
-
 class NoticeService {
   constructor(Notice) {
     this.noticeRepository = Notice;
   }
 
-  async createNotice(noticeCreateRequestDTO) {}
+  async createNotice(noticeCreateRequestDTO) {
+    try {
+      if (!(noticeCreateRequestDTO instanceof NoticeCreateRequestDTO)) {
+        throw new Error("Invalid request DTO");
+      }
+      const { noticeTitle, noticeContent, adminId, adminNickname } =
+        noticeCreateRequestDTO;
+      const createdValues = await this.noticeRepository.create({
+        title: noticeTitle,
+        content: noticeContent,
+        adminId: adminId,
+        adminNickname: adminNickname,
+      });
+      return new NoticeCreateResponseDTO({ Notice_id: createdValues.id });
+    } catch (e) {
+      console.error("Service createNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 
-  async findAllNotice() {}
+  async findAllNotice() {
+    try {
+      const notices = await this.noticeRepository.findAll();
+      return notices.map((notice) => new NoticeFindAllResponseDTO(notice));
+    } catch (e) {
+      console.error("Service findAllNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 
-  async findNotice(noticeFindRequestDTO) {}
+  async findNotice(noticeFindRequestDTO) {
+    try {
+      if (!(noticeFindRequestDTO instanceof NoticeFindRequestDTO)) {
+        throw new Error("Invalid request DTO");
+      }
+      const notice = await this.noticeRepository.findById(
+        noticeFindRequestDTO.noticeId
+      );
+      if (!notice) {
+        throw new Error("Notice not found");
+      }
+      return new NoticeFindResponseDTO(notice);
+    } catch (e) {
+      console.error("Service findNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 
-  async updateNotice(noticeUpdateRequestDTO) {}
+  async updateNotice(noticeUpdateRequestDTO) {
+    try {
+      if (!(noticeUpdateRequestDTO instanceof NoticeUpdateRequestDTO)) {
+        throw new Error("Invalid request DTO");
+      }
+      const { noticeId, noticeTitle, noticeContent } = noticeUpdateRequestDTO;
+      await this.noticeRepository.update({
+        id: noticeId,
+        title: noticeTitle,
+        content: noticeContent,
+      });
+      return { message: "Update successful" };
+    } catch (e) {
+      console.error("Service updateNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 
-  async deleteNotice(noticeDeleteRequestDTO) {}
+  async deleteNotice(noticeDeleteRequestDTO) {
+    try {
+      if (!(noticeDeleteRequestDTO instanceof NoticeDeleteRequestDTO)) {
+        throw new Error("Invalid request DTO");
+      }
+      const deletedRowCount = await this.noticeRepository.delete(
+        noticeDeleteRequestDTO.noticeId
+      );
+      if (deletedRowCount === 0) {
+        throw new Error("Notice not found");
+      }
+      return { message: "Notice deletion successful" };
+    } catch (e) {
+      console.error("Service deleteNotice Error", e);
+      throw new Error(e.message);
+    }
+  }
 }
+
+module.exports = NoticeService;

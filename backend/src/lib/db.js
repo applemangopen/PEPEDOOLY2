@@ -24,3 +24,5 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+// console.log("Loaded models", db);

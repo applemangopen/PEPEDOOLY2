@@ -1,15 +1,17 @@
 const db = require("../lib/db");
-const { AdminLoginRequestDTO } = require("./dto/admin.login.request.dto");
+const { AdminLoginRequestDTO } = require("./dto/admin.dto");
 
 class AdminService {
-    constructor(Admin) {
-        this.admin = Admin;
-    }
-    async createAdmin() {}
+  constructor(Admin) {
+    this.admin = Admin;
+  }
+  async createAdmin() {}
 
-    async getAdminById() {}
+  async getAdminById() {}
 
-    async updateAdmin() {}
+  async updateAdmin() {}
 
-    async deleteAdmin() {}
+  async deleteAdmin() {}
 }
+
+module.exports = AdminService;

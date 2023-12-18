@@ -1,4 +1,3 @@
-const express = require("express");
 const db = require("./src/lib/db");
 const app = require("./app");
 

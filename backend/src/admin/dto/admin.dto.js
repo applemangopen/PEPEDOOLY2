@@ -1,6 +1,6 @@
 const BaseDTO = require("../../lib/base.dto");
 
-class AdminLoginRequestDTO extends baseDTO {
+class AdminLoginRequestDTO extends BaseDTO {
   adminId;
   adminPassword;
 
