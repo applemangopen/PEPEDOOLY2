@@ -20,6 +20,10 @@
   border-radius: 8px;
   background-color: white;
 }
+.post a {
+  text-decoration: none;
+  color: inherit;
+}
 
 .post-image {
   width: 100%;
