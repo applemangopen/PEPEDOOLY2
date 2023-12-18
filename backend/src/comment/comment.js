@@ -45,9 +45,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   // 외래키 관계 설정 예정 (Users, Boards 테이블이 정의된 후에)
-  // Comment.belongsTo(Users, { foreignKey: "Users_uid", as: "User" });
-  // Comment.belongsTo(Boards, { foreignKey: "Boards_id", as: "Board" });
-  // Comment.hasMany(Comment, { foreignKey: "ParentCommentId", as: "Replies" });
-  // Comment.belongsTo(Comment, { foreignKey: "ParentCommentId", as: "ParentComment" });
+  Comment.belongsTo(Users, { foreignKey: "Users_uid", as: "User" });
+  Comment.belongsTo(Boards, { foreignKey: "Boards_id", as: "Board" });
+  Comment.hasMany(Comment, { foreignKey: "ParentCommentId", as: "Replies" });
+  Comment.belongsTo(Comment, {
+    foreignKey: "ParentCommentId",
+    as: "ParentComment",
+  });
   return Comment;
 };
