@@ -7,8 +7,12 @@ class CommentController {
 
   async postComment(req, res, next) {
     try {
+      console.log("1");
       const commentCreateRequestDTO = new CommentCreateRequestDTO(req);
+      console.log("2");
       const result = await this.service.createComment(commentCreateRequestDTO);
+      console.log("3");
+      console.log(result);
       return res.status(201).json(result);
     } catch (e) {
       next(e);

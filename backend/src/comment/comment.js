@@ -32,19 +32,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: "comments",
+          model: "Comments",
           key: "Comments_uid",
+        },
+        foreignKey: {
+          name: "fk_parent_comment",
         },
       },
     },
     {
-      tableName: "comments",
+      tableName: "Comments",
       freezeTableName: true,
       timestamps: false,
     }
   );
 
-  // 외래키 관계 설정 예정 (Users, Boards 테이블이 정의된 후에)
   // Comment.belongsTo(Users, { foreignKey: "Users_uid", as: "User" });
   // Comment.belongsTo(Boards, { foreignKey: "Boards_id", as: "Board" });
   // Comment.hasMany(Comment, { foreignKey: "ParentCommentId", as: "Replies" });

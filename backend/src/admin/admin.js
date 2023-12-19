@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       Admin_id: {
         type: DataTypes.STRING,
+        primaryKey: true,
         allowNull: false,
       },
       Admin_password: {

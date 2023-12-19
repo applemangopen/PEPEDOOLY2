@@ -11,17 +11,17 @@ app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
 app.use(
-  cors({
-    origin: allowedOrigins,
-    method: "GET,POST,OPTIONS,PUT,DELETE,UPDATE",
-    credentials: true,
-  })
+    cors({
+        origin: allowedOrigins,
+        method: "GET,POST,OPTIONS,PUT,DELETE,UPDATE",
+        credentials: true,
+    })
 );
 
 app.use(router);
 
 app.use((error, req, res, next) => {
-  res.status(500).send(error.message);
+    res.status(500).send(error.message);
 });
 
 module.exports = app;
