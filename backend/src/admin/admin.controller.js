@@ -1,4 +1,9 @@
-const { AdminLoginRequestDTO } = require("./dto/admin.dto");
+const {
+  AdminLoginRequestDTO,
+  AdminInfoRequestDTO,
+  AdminUpdateRequestDTO,
+  AdminDeleteRequestDTO,
+} = require("./dto/admin.dto");
 
 class AdminController {
   constructor(service) {
@@ -7,7 +12,6 @@ class AdminController {
   async login(req, res, next) {
     try {
       const adminLoginRequestDTO = new AdminLoginRequestDTO(req.body);
-      console.log(adminLoginRequestDTO);
       const token = await this.service.login(adminLoginRequestDTO);
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
@@ -22,7 +26,8 @@ class AdminController {
   }
 
   async getAdmin(req, res) {
-    const admin = await this.service.getAdminById(req.admin);
+    const adminInfoRequestDTO = new AdminInfoRequestDTO(req.admin);
+    const admin = await this.service.getAdminById(adminInfoRequestDTO);
     res.json(admin);
   }
 
@@ -33,8 +38,8 @@ class AdminController {
   }
 
   async deleteAdmin(req, res) {
-    const adminId = req.admin;
-    await this.adminService.deleteAdmin(adminId);
+    const adminDeleteRequestDTO = new AdminDeleteRequestDTO(req.admin);
+    await this.adminService.deleteAdmin(adminDeleteRequestDTO);
     res.status(204).send();
   }
 }

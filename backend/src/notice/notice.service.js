@@ -19,22 +19,27 @@ class NoticeService {
       }
       const { noticeTitle, noticeContent, adminId, adminNickname } =
         noticeCreateRequestDTO;
+      if (!adminId) {
+        throw new Error("adminId cannot be null");
+      }
       const createdValues = await this.noticeRepository.create({
-        title: noticeTitle,
-        content: noticeContent,
-        adminId: adminId,
-        adminNickname: adminNickname,
+        Admin_id: adminId,
+        Notice_title: noticeTitle,
+        Notice_content: noticeContent,
+        Notice_writer: adminNickname,
       });
-      return new NoticeCreateResponseDTO({ Notice_id: createdValues.id });
+      return new NoticeCreateResponseDTO({
+        Notice_id: createdValues.Notice_id,
+      });
     } catch (e) {
       console.error("Service createNotice Error", e);
       throw new Error(e.message);
     }
   }
-
   async findAllNotice() {
     try {
       const notices = await this.noticeRepository.findAll();
+      console.log(notices);
       return notices.map((notice) => new NoticeFindAllResponseDTO(notice));
     } catch (e) {
       console.error("Service findAllNotice Error", e);

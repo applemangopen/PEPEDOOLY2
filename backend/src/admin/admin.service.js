@@ -9,17 +9,16 @@ class AdminService {
     const admin = await this.admin.findOne({
       where: { Admin_id: adminLoginRequestDTO.adminId },
     });
-    console.log(admin);
+    /*     console.log(admin); */
     if (
       admin &&
       admin.dataValues.Admin_password === adminLoginRequestDTO.adminPassword
     ) {
       const jwtPayload = {
         adminId: admin.dataValues.Admin_id,
-        adminPassword: admin.dataValues.Admin_password,
         adminUid: admin.dataValues.Admin_uid,
       };
-      console.log(jwtPayload);
+      /*       console.log(jwtPayload); */
       const token = jwt.sign(jwtPayload);
       return token;
     } else {
@@ -28,9 +27,17 @@ class AdminService {
     }
   }
 
-  async getAdminById(decoded) {
+  async getAdminById(adminInfoRequestDTO) {
     const admin = await this.admin.findOne({
-      where: { Admin_uid: decoded.adminUid },
+      where: { Admin_uid: adminInfoRequestDTO.adminUid },
+    });
+    const adminInfo = admin.dataValues;
+    return adminInfo;
+  }
+
+  async getAdminData(decoded) {
+    const admin = await this.admin.findOne({
+      where: { Admin_uid: decoded.payload.adminUid },
     });
     const adminInfo = admin.dataValues;
     return adminInfo;
@@ -43,8 +50,10 @@ class AdminService {
     return updatedAdmin;
   }
 
-  async deleteAdmin(adminId) {
-    await this.admin.destroy({ where: { adminId } });
+  async deleteAdmin(adminDeleteRequestDTO) {
+    await this.admin.destroy({
+      where: { Admin_uid: adminDeleteRequestDTO.adminUid },
+    });
   }
 }
 
