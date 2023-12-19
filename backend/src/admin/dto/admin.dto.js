@@ -1,4 +1,5 @@
 const BaseDTO = require("../../lib/base.dto");
+const { BadRequest } = require("../../lib/customException");
 
 class AdminLoginRequestDTO extends BaseDTO {
   adminId;
@@ -8,15 +9,19 @@ class AdminLoginRequestDTO extends BaseDTO {
     super();
     this.adminId = body.adminId;
     this.adminPassword = body.adminPassword;
+
+    this.validate(this, BadRequest);
   }
 }
 
 class AdminInfoRequestDTO extends BaseDTO {
   adminId;
 
-  constructor(body) {
+  constructor(admin) {
     super();
-    this.adminId = body.Admin_id;
+    this.adminId = admin.Admin_id;
+
+    this.validate(this, BadRequest);
   }
 }
 
@@ -27,22 +32,26 @@ class AdminUpdateRequestDTO extends BaseDTO {
   adminEmail;
   adminProfile;
 
-  constructor(body) {
+  constructor(admin) {
     super();
-    this.adminId = body.Admin_id;
-    this.adminName = body.Admin_name;
-    this.adminNickname = body.Admin_nickname;
-    this.adminEmail = body.Admin_email;
-    this.adminProfile = body.Admin_profile;
+    this.adminId = admin.Admin_id;
+    this.adminName = admin.Admin_name;
+    this.adminNickname = admin.Admin_nickname;
+    this.adminEmail = admin.Admin_email;
+    this.adminProfile = admin.Admin_profile;
+
+    this.validate(this, BadRequest);
   }
 }
 
 class AdminDeleteRequestDTO extends BaseDTO {
   adminId;
 
-  constructor(body) {
+  constructor(admin) {
     super();
     this.adminId = body.Admin_id;
+
+    this.validate(this, BadRequest);
   }
 }
 
