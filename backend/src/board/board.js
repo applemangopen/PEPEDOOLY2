@@ -1,46 +1,5 @@
-// const { Sequelize, DataTypes } = require("sequelize");
-// const db = require("../lib/db");
-
-// const Board = db.define(
-//   "Boards",
-//   {
-//     Boards_id: {
-//       type: DataTypes.INTEGER,
-//       primaryKey: true,
-//       autoIncrement: true,
-//     },
-//     Users_uid: {
-//       type: DataTypes.INTEGER,
-//       allowNull: false,
-//     },
-//     Boards_title: {
-//       type: DataTypes.STRING(255),
-//       allowNull: false,
-//     },
-//     Boards_content: {
-//       type: DataTypes.TEXT,
-//       allowNull: true,
-//     },
-//     Boards_created_at: {
-//       type: DataTypes.DATE,
-//       allowNull: false,
-//       defaultValue: Sequelize.NOW,
-//     },
-//     Boards_views: {
-//       type: DataTypes.INTEGER,
-//       allowNull: false,
-//       defaultValue: 0,
-//     },
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
-
-// module.exports = Board;
-
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const Boards = sequelize.define(
     "Boards",
     {
       Boards_id: {
@@ -76,4 +35,13 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
+  Boards.associate = function (models) {
+    Boards.hasMany(models.Images, {
+      foreignKey: "Boards_id", // 'Boards_id'를 외래 키로 지정합니다.
+      as: "Images",
+    });
+  };
+
+  return Boards;
 };

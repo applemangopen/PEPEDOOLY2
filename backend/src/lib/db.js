@@ -18,11 +18,20 @@ const entityList = [
   `../notice/notice`,
   `../comment/comment`,
   `../board/board`,
+  "../board/images",
+  "../board/likes",
 ];
 
 entityList.forEach((entity) => {
   const model = require(entity)(sequelize, Sequelize.DataTypes);
   db[model.name] = model;
+});
+
+// 모델 간 관계 설정
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db); // 각 모델의 연관 관계를 설정합니다.
+  }
 });
 
 db.sequelize = sequelize;

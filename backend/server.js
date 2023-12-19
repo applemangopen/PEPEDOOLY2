@@ -1,7 +1,7 @@
 const db = require("./src/lib/db");
 const app = require("./app");
 
-app.listen(4000, async () => {
+app.listen(8000, async () => {
   try {
     await db.sequelize.sync({ force: false });
     console.log("Backend Start");

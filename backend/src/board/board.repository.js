@@ -1,4 +1,5 @@
-const Board = require("./board.entity");
+const db = require("../lib/db.js"); // 여기서 경로는 실제 db.js 파일의 위치에 맞게 조정해야 함
+const Board = db.Boards; // db 객체에서 Boards 모델을 가져옴
 
 const getBoardList = async () => {
   return await Board.findAll();
