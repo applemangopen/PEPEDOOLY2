@@ -22,8 +22,10 @@ class JWT {
 
       if (signature !== newSignature) return null;
 
-      const result = this.decode(payload);
-      return result;
+      const decodedHeader = this.decode(header);
+      const decodedPayload = this.decode(payload);
+
+      return { header: decodedHeader, payload: decodedPayload };
     } catch (e) {
       throw e;
     }
@@ -33,7 +35,15 @@ class JWT {
     return Buffer.from(JSON.stringify(obj)).toString("base64url");
   }
   decode(base64) {
+<<<<<<< Updated upstream
     return JSON.parse(Buffer.from(base64, "base64url")).toString("utf-8");
+=======
+<<<<<<< HEAD
+    return JSON.parse(Buffer.from(base64, "base64url"));
+=======
+    return JSON.parse(Buffer.from(base64, "base64").toString("utf-8"));
+>>>>>>> e8861c1adfc7a18cbc409960944a0659fc0d0f12
+>>>>>>> Stashed changes
   }
 
   createSignature(base64url) {

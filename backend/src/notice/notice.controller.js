@@ -14,9 +14,25 @@ class NoticeController {
     this.service = service;
   }
 
-  async postNotice(req, res) {
-    const adminData = req.body;
-    console.log(adminData);
+  async postNotice(req, res, next) {
+    try {
+      const adminId = req.admin;
+      if (!adminId) {
+        throw new Error("Invalid admin ID");
+      }
+
+      const noticeCreateRequestDTO = new NoticeCreateRequestDTO(
+        req.body,
+        req.admin
+      );
+      const noticeCreateResponseDTO = await this.service.createNotice(
+        noticeCreateRequestDTO
+      );
+      res.status(201).json(noticeCreateResponseDTO);
+    } catch (e) {
+      console.error("postNotice Error", e);
+      next(e);
+    }
   }
 
   async getAllNotice(req, res) {

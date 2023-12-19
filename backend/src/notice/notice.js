@@ -4,16 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       Notice_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-      },
-      Admin_uid: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      Users_uid: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       },
       Notice_title: {
         type: DataTypes.STRING,
