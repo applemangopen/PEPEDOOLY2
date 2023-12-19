@@ -29,7 +29,6 @@ exports.adminAuth = async (req, res, next) => {
     if (!adminInfo) {
       throw new Error("admin not found");
     }
-    console.log(adminInfo);
     req.admin = adminInfo;
     next();
   } catch (e) {
