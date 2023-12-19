@@ -33,7 +33,7 @@ class NoticeFindRequestDTO extends BaseDTO {
   noticeId;
   constructor(body) {
     super();
-    this.noticeID = body.noticeID;
+    this.noticeId = body.noticeId;
 
     this.validate(this, BadRequest);
   }

@@ -52,9 +52,9 @@ class NoticeService {
       if (!(noticeFindRequestDTO instanceof NoticeFindRequestDTO)) {
         throw new Error("Invalid request DTO");
       }
-      const notice = await this.noticeRepository.findById(
-        noticeFindRequestDTO.noticeId
-      );
+      const notice = await this.noticeRepository.findOne({
+        where: { Notice_id: noticeFindRequestDTO.noticeId },
+      });
       if (!notice) {
         throw new Error("Notice not found");
       }
@@ -71,11 +71,15 @@ class NoticeService {
         throw new Error("Invalid request DTO");
       }
       const { noticeId, noticeTitle, noticeContent } = noticeUpdateRequestDTO;
-      await this.noticeRepository.update({
-        id: noticeId,
-        title: noticeTitle,
-        content: noticeContent,
-      });
+      await this.noticeRepository.update(
+        {
+          Notice_title: noticeTitle,
+          Notice_content: noticeContent,
+        },
+        {
+          where: { Notice_id: noticeId },
+        }
+      );
       return { message: "Update successful" };
     } catch (e) {
       console.error("Service updateNotice Error", e);
@@ -88,9 +92,9 @@ class NoticeService {
       if (!(noticeDeleteRequestDTO instanceof NoticeDeleteRequestDTO)) {
         throw new Error("Invalid request DTO");
       }
-      const deletedRowCount = await this.noticeRepository.delete(
-        noticeDeleteRequestDTO.noticeId
-      );
+      const deletedRowCount = await this.noticeRepository.destroy({
+        where: { Notice_id: noticeDeleteRequestDTO.noticeId },
+      });
       if (deletedRowCount === 0) {
         throw new Error("Notice not found");
       }
