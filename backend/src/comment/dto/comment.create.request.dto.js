@@ -11,8 +11,9 @@ class CommentCreateRequestDTO extends BaseDTO {
         this.Comments_content = req.body.Comments_content;
         this.Users_uid = req.body.Users_uid;
         this.Boards_id = req.body.Boards_id;
-        this.ParentCommentId = req.body.ParentCommentId;
-
+        this.ParentCommentId = req.body.ParentCommentId || null;
+        console.log("req.body.ParentCommentId", req.body.ParentCommentId);
+        console.log("req.body.ParentCommentId", this.ParentCommentId);
         this.validate(this);
     }
 }
