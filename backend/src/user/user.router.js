@@ -9,12 +9,12 @@ const postProfile = userController.postProfile.bind(userController);
 const putProfile = userController.putProfile.bind(userController);
 // const getProfile = userController.getProfile.bind(userController);
 
-// 로그인
-userRouter.post("/login", login);
-// userRouter.get("/:provider", login);
-
 // 회원가입 ,
-userRouter.post("/signup", postSignup);
+userRouter.post("/", postSignup);
+// 로그인
+userRouter.post("/:provider", login);
+// userRouter.post("/login", login);
+
 userRouter.post("profile", upload.single("profile"), postProfile);
 
 // 유저 정보 수정

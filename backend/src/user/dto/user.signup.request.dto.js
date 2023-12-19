@@ -12,7 +12,7 @@ class UserSignupRequestDTO extends baseDTO {
 
     this.userEmail = body.email;
     console.log(this.userEmail);
-    this.userPassword = body.password[0];
+    this.userPassword = body.password;
     console.log(this.userPassword);
     this.userName = body.name;
     console.log(this.userName);

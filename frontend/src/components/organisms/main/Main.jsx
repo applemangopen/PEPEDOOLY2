@@ -1,14 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Login";
-import Admin from "./Admin";
-import Register from "./Register";
-import Comments from "../organisms/comments/Comments";
-import Board from "../board/Board";
-import MainComponent from "../organisms/main/Main";
-import Header from "../Layout/Header";
-import DashBoard from "./DashBoard";
-import { useUserState } from "../../hooks/useUserState";
+import Login from "../../page/Login";
+
+import Header from "../../Layout/Header";
+import { useUserState } from "../../../hooks/useUserState";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
@@ -34,7 +29,7 @@ const Main = () => {
   };
   return (
     <>
-      {/* <Header />
+      <Header />
       <div>
         <div>
           <div>
@@ -49,7 +44,7 @@ const Main = () => {
             밈토큰에 토론하세요!
           </div>
         </div>
-      </div> */}
+      </div>
 
       {user && user.userData && (
         <div>
@@ -59,19 +54,6 @@ const Main = () => {
           )}
         </div>
       )}
-      <Routes>
-        <Route path="/" element={<MainComponent />} />
-        <Route path="/login" element={<LoginRedirect />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/comments" element={<Comments />} />
-        <Route path="/board/*" element={<Board />} />
-        <Route path="/dashboard" element={<DashBoard />} />
-
-        {/* 
-      <Header />
-      <Footer /> */}
-      </Routes>
     </>
   );
 };
