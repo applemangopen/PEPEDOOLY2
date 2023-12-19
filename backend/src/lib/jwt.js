@@ -35,23 +35,7 @@ class JWT {
     return Buffer.from(JSON.stringify(obj)).toString("base64url");
   }
   decode(base64) {
-<<<<<<< HEAD
-<<<<<<< HEAD
     return JSON.parse(Buffer.from(base64, "base64url"));
-=======
-<<<<<<< Updated upstream
-    return JSON.parse(Buffer.from(base64, "base64url")).toString("utf-8");
-=======
-<<<<<<< HEAD
-    return JSON.parse(Buffer.from(base64, "base64url"));
-=======
-    return JSON.parse(Buffer.from(base64, "base64").toString("utf-8"));
->>>>>>> e8861c1adfc7a18cbc409960944a0659fc0d0f12
->>>>>>> Stashed changes
->>>>>>> LoginBackend
-=======
-    return JSON.parse(Buffer.from(base64, "base64").toString("utf-8"));
->>>>>>> e8861c1adfc7a18cbc409960944a0659fc0d0f12
   }
 
   createSignature(base64url) {
