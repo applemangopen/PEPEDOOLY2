@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  height: 64vh;
 `;
 const StyledFooter = styled(Footer)`
   position: fixed;
@@ -17,9 +17,7 @@ const StyledFooter = styled(Footer)`
 const MainContainer = ({ menu }) => {
   return (
     <Container>
-      <Header />
       <BodyContainer menu={menu} />
-      <StyledFooter />
     </Container>
   );
 };

@@ -106,6 +106,7 @@ function App() {
         </Icon> */}
         </IconsContainer>
         <ForgotPassword onClick={goRegister}>Join PepeDooly</ForgotPassword>
+        <AdminLogin onClick={() => movePage("/adminLogin")}>👑</AdminLogin>{" "}
       </MainContainer>
     </>
   );
@@ -207,6 +208,16 @@ const IconsContainer = styled.div`
 `;
 
 const ForgotPassword = styled.h4`
+  cursor: pointer;
+`;
+
+const AdminLogin = styled.button`
+  margin-top: 30px;
+  width: 40px;
+  height: 30px;
+  align-items: center;
+  background-color: #4dc74d;
+  border: 1.5px solid #4f4f4f;
   cursor: pointer;
 `;
 

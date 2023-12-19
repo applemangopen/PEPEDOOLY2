@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditForm from "../../molecules/admin/EditForm";
 import ProfileImage from "../../atoms/admin/ProfileImage";
 import styled from "styled-components";
@@ -11,15 +11,25 @@ const FieldContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const Info = ({ isEdit, uid }) => {
+const Info = ({ isEdit, data }) => {
+  console.log(data);
   const [isEditState, setIsEdit] = useState(isEdit);
   const [imageUrl, setImageUrl] = useState("");
   const [fields, setFields] = useState([
-    { id: 1, label: "이메일", value: "" },
-    { id: 2, label: "이름", value: "" },
-    { id: 3, label: "전화번호", value: "" },
-    { id: 4, label: "비밀번호", value: "", isPassword: true },
+    { id: 1, value: data.Admin_id || "" },
+    { id: 2, value: data.Admin_name || "" },
+    { id: 3, value: data.Admin_nickname || "" },
+    { id: 4, value: "", isPassword: true },
   ]);
+
+  useEffect(() => {
+    setFields([
+      { id: 1, value: data.Admin_id || "" },
+      { id: 2, value: data.Admin_name || "" },
+      { id: 3, value: data.Admin_nickname || "" },
+      { id: 4, value: "", isPassword: true },
+    ]);
+  }, [data]);
 
   const handleInputChangeLocal = (id, value) => {
     setFields(
@@ -30,7 +40,7 @@ const Info = ({ isEdit, uid }) => {
   const handleEditClick = () => {
     if (isEditState) {
       axios
-        .put(`/admin/${uid}`, fields)
+        .put(`/admin/edit`, fields)
         .then((response) => {
           setFields(response.data);
         })
@@ -47,7 +57,7 @@ const Info = ({ isEdit, uid }) => {
     formData.append("image", file);
 
     axios
-      .post(`/admin/${uid}/image`, formData)
+      .post(`/admin/${data}/image`, formData)
       .then((response) => {
         setImageUrl(response.data.imageUrl);
       })

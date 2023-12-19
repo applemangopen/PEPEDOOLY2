@@ -5,6 +5,7 @@ import Admin from "./Admin";
 import Register from "./Register";
 import Comments from "../organisms/comments/Comments";
 import Board from "../board/Board";
+import AdminLogin from "./AdminLogin";
 
 // import Header from "../Layout/Header";
 // import Footer from "../Layout/Footer";
@@ -18,6 +19,7 @@ const Main = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/comments" element={<Comments />} />
       <Route path="/board/*" element={<Board />} />
+      <Route path="/adminLogin" element={<AdminLogin />} />
       {/* 
       <Header />
       <Footer /> */}
