@@ -11,7 +11,7 @@ router.use("/admin", adminRouter);
 router.use("/notice", noticeRouter);
 router.use("/users", userRouter);
 // router.use("/boards", boardRouter);
-// router.use("/comments", commentRouter);
+router.use("/comments", commentRouter);
 // router.use("/chat", chatRouter);
 
 module.exports = router;
