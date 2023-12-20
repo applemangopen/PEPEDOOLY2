@@ -64,6 +64,8 @@
 
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Link } from "react-router-dom"; // React Router의 Link 컴포넌트 사용
 
 const HeaderStyle = styled.nav`
@@ -91,6 +93,17 @@ const MenuItem = styled.li`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const logout = async () => {
+    try {
+      await axios.get("http://localhost:4000/admin/logout");
+      localStorage.clear();
+      navigate("/");
+    } catch (error) {
+      console.error("로그아웃 요청 실패", error);
+    }
+  };
+
   return (
     <HeaderStyle>
       <div>
@@ -100,6 +113,11 @@ const Header = () => {
         />
         <Link to="/">PepeDooly</Link> {/* Link 컴포넌트로 변경 */}
       </div>
+
+      <ul>
+        <li onClick={logout}>로그아웃</li>
+      </ul>
+
       <RightMenu>
         <MenuItem>
           <Link to="/board">게시판</Link> {/* Link 컴포넌트로 변경 */}

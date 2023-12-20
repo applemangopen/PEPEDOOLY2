@@ -5,6 +5,8 @@ import Admin from "./Admin";
 import Register from "./Register";
 import Comments from "../organisms/comments/Comments";
 import Board from "../board/Board";
+import AdminLogin from "./AdminLogin";
+// import Header from "../Layout/Header";
 import MainComponent from "../organisms/main/Main";
 import Header from "../Layout/Header";
 import DashBoard from "./DashBoard";
@@ -67,7 +69,7 @@ const Main = () => {
         <Route path="/comments" element={<Comments />} />
         <Route path="/board/*" element={<Board />} />
         <Route path="/dashboard" element={<DashBoard />} />
-
+        <Route path="/adminLogin" element={<AdminLogin />} />
         {/* 
       <Header />
       <Footer /> */}

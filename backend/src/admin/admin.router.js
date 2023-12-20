@@ -1,15 +1,15 @@
 const express = require("express");
 const adminRouter = express.Router();
 const { adminController } = require("./admin.module");
-const { adminAuth } = require("../../src/lib/jwtAuthMiddleware");
+const AuthMiddleware = require("../../src/lib/jwtAuthMiddleware");
 
 const login = adminController.login.bind(adminController);
+const logout = adminController.logout.bind(adminController);
 const getAdmin = adminController.getAdmin.bind(adminController);
 const putAdmin = adminController.putAdmin.bind(adminController);
-const deleteAdmin = adminController.deleteAdmin.bind(adminController);
 
 adminRouter.post("/login", login);
-adminRouter.get("/:uid", adminAuth, getAdmin);
-adminRouter.put("/:uid", adminAuth, putAdmin);
-adminRouter.delete("/:uid", adminAuth, deleteAdmin);
+adminRouter.get("/logout", logout);
+adminRouter.get("/info", AuthMiddleware.adminAuth, getAdmin);
+adminRouter.put("/:Admin_uid", AuthMiddleware.adminAuth, putAdmin);
 module.exports = adminRouter;
