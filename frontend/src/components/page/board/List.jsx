@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./List.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios"; // axios 추가
 
 export default function List() {
-  const [posts, setPosts] = useState(examplePosts);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await axios.get("http://localhost:8000/boards");
+        // 성공적으로 데이터를 가져온 경우, 데이터를 상태로 설정합니다.
+        setPosts(response.data);
+      } catch (error) {
+        // 데이터 가져오기 실패 시 오류 처리를 할 수 있습니다.
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    // 데이터를 가져오는 함수를 호출합니다.
+    fetchPosts();
+  }, []);
+
   return (
     <div className={styles.board}>
       <h1>게시판</h1>
       <div className={styles.posts}>
         {posts.map((post) => (
-          <div key={post.id} className={styles.post}>
-            <Link to={`/board/view/${post.id}`}>
-              <img
-                src={post.images[0]}
-                alt={`Post ${post.id}`}
-                className={styles["post-image"]}
-              />
-              <h2 className={styles.title}>{post.title}</h2>
+          <div key={post.Boards_id} className={styles.post}>
+            <Link to={`/board/view/${post.Boards_id}`}>
+              {/* 이미지 및 게시물 정보를 렌더링하는 코드 */}
+              <h2 className={styles.title}>{post.Boards_title}</h2>
             </Link>
             <div className={styles["post-info"]}>
-              <p className={styles.writer}>작성자: {post.writer}</p>
-              <p className={styles.likes}>좋아요: {post.likes}</p>
-              <p className={styles.views}>조회수: {post.views}</p>
+              <p className={styles.writer}>작성자: {post.Users_uid}</p>
+              <p className={styles.likes}>좋아요: {post.Boards_views}</p>
+              <p className={styles.views}>조회수: {post.Boards_views}</p>
             </div>
           </div>
         ))}
@@ -29,152 +43,3 @@ export default function List() {
     </div>
   );
 }
-
-// examplePosts는 이전과 동일하게 유지
-
-const examplePosts = [
-  {
-    id: 1,
-    writer: "MemeMaster1",
-    title: "Cats Everywhere",
-    likes: 105,
-    views: 210,
-    images: ["https://picsum.photos/200/300?random=1"],
-  },
-  {
-    id: 2,
-    writer: "FunnyFan2",
-    title: "Dog with Sunglasses",
-    likes: 95,
-    views: 180,
-    images: ["https://picsum.photos/200/300?random=2"],
-  },
-  {
-    id: 3,
-    writer: "LaughBuddy3",
-    title: "Surprised Panda",
-    likes: 150,
-    views: 250,
-    images: ["https://picsum.photos/200/300?random=3"],
-  },
-  {
-    id: 4,
-    writer: "Jokester4",
-    title: "Dancing Parrot",
-    likes: 110,
-    views: 200,
-    images: ["https://picsum.photos/200/300?random=4"],
-  },
-  {
-    id: 5,
-    writer: "GiggleGenius5",
-    title: "Happy Seal",
-    likes: 120,
-    views: 190,
-    images: ["https://picsum.photos/200/300?random=5"],
-  },
-  {
-    id: 6,
-    writer: "MemeMaster6",
-    title: "Jumping Fox",
-    likes: 130,
-    views: 220,
-    images: ["https://picsum.photos/200/300?random=6"],
-  },
-  {
-    id: 7,
-    writer: "FunnyFan7",
-    title: "Sleepy Kitten",
-    likes: 90,
-    views: 160,
-    images: ["https://picsum.photos/200/300?random=7"],
-  },
-  {
-    id: 8,
-    writer: "LaughBuddy8",
-    title: "Curious Squirrel",
-    likes: 140,
-    views: 230,
-    images: ["https://picsum.photos/200/300?random=8"],
-  },
-  {
-    id: 9,
-    writer: "Jokester9",
-    title: "Frog in a Hat",
-    likes: 115,
-    views: 205,
-    images: ["https://picsum.photos/200/300?random=9"],
-  },
-  {
-    id: 10,
-    writer: "GiggleGenius10",
-    title: "Bunny with a Pancake",
-    likes: 125,
-    views: 175,
-    images: ["https://picsum.photos/200/300?random=10"],
-  },
-  {
-    id: 11,
-    writer: "MemeMaster11",
-    title: "Chameleon Colors",
-    likes: 135,
-    views: 195,
-    images: ["https://picsum.photos/200/300?random=11"],
-  },
-  {
-    id: 12,
-    writer: "FunnyFan12",
-    title: "Elephant Playing Soccer",
-    likes: 100,
-    views: 160,
-    images: ["https://picsum.photos/200/300?random=12"],
-  },
-  {
-    id: 13,
-    writer: "LaughBuddy13",
-    title: "Goofy Gorilla",
-    likes: 145,
-    views: 210,
-    images: ["https://picsum.photos/200/300?random=13"],
-  },
-  {
-    id: 14,
-    writer: "Jokester14",
-    title: "Hedgehog in a Teacup",
-    likes: 115,
-    views: 200,
-    images: ["https://picsum.photos/200/300?random=14"],
-  },
-  {
-    id: 15,
-    writer: "GiggleGenius15",
-    title: "Duckling Duo",
-    likes: 130,
-    views: 180,
-    images: ["https://picsum.photos/200/300?random=15"],
-  },
-  {
-    id: 16,
-    writer: "MemeMaster16",
-    title: "Parrot Pals",
-    likes: 120,
-    views: 190,
-    images: ["https://picsum.photos/200/300?random=16"],
-  },
-  {
-    id: 17,
-    writer: "FunnyFan17",
-    title: "Turtle with a Hat",
-    likes: 140,
-    views: 215,
-    images: ["https://picsum.photos/200/300?random=17"],
-  },
-  {
-    id: 18,
-    writer: "LaughBuddy18",
-    title: "Mischievous Monkey",
-    likes: 150,
-    views: 220,
-    images: ["https://picsum.photos/200/300?random=18"],
-  },
-];

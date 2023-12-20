@@ -8,7 +8,15 @@ const sequelize = new Sequelize(process.env["DB_DATABASE"], process.env["DB_USER
     port: process.env["DB_PORT"],
 });
 
-const entityList = [`../user/user`, `../admin/admin`, `../notice/notice`, `../comment/comment`];
+
+const entityList = [
+  `../admin/admin`,
+  `../notice/notice`,
+  `../comment/comment`,
+  `../board/board`,
+  "../board/images",
+  "../board/likes",
+];
 
 entityList.forEach((entity) => {
     const model = require(entity)(sequelize, Sequelize.DataTypes);
@@ -31,6 +39,13 @@ db["Comment"].belongsTo(db["Comment"], {
         name: "fk_parent_comment", // 올바른 외래 키 이름 지정
         field: "ParentCommentId", // 실제 데이터베이스에서 사용될 컬럼 이름
     },
+});
+
+// 모델 간 관계 설정
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db); // 각 모델의 연관 관계를 설정합니다.
+  }
 });
 
 db.sequelize = sequelize;
