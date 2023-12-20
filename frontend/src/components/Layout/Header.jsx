@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const HeaderStyle = styled.nav`
   top: 0;
   font-size: 15px;
@@ -13,6 +14,17 @@ const HeaderStyle = styled.nav`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const logout = async () => {
+    try {
+      await axios.get("http://localhost:4000/admin/logout");
+      localStorage.clear();
+      navigate("/");
+    } catch (error) {
+      console.error("로그아웃 요청 실패", error);
+    }
+  };
+
   return (
     <HeaderStyle>
       <div>
@@ -28,6 +40,7 @@ const Header = () => {
         </li>
         <li>MEMECHAT</li>
         <li>DASHBOARD</li>
+        <li onClick={logout}>로그아웃</li>
       </ul>
     </HeaderStyle>
   );

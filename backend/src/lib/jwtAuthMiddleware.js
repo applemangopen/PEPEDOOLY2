@@ -9,39 +9,39 @@ const { Users, Admin } = db;
 const userService = new UserService(Users);
 const adminService = new AdminService(Admin);
 
-exports.adminAuth = async (req, res, next) => {
-  try {
-    const cookie = req.headers.cookie;
-    const token = cookie.split("=")[1];
-    /*     console.log(token); */
-    if (!token) {
-      throw new Error("No token provided");
-    }
+class AuthMiddleware {
+  static async adminAuth(req, res, next) {
+    try {
+      const cookie = req.headers.authorization;
+      const token = cookie.replace("Bearer ", "");
+      if (!token) {
+        throw new Error("No token provided");
+      }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (!decoded) {
-      throw new Error("Invalid token");
-    }
-    /*    console.log(decoded); */
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+      if (!decoded) {
+        throw new Error("Invalid token");
+      }
 
-    const adminInfo = await adminService.getAdminData(decoded);
-    /*    console.log(adminInfo); */
-    if (!adminInfo) {
-      throw new Error("admin not found");
+      const adminInfo = await adminService.getAdminData(decoded);
+      console.log(adminInfo);
+      if (!adminInfo) {
+        throw new Error("admin not found");
+      }
+      req.admin = adminInfo;
+      next();
+    } catch (e) {
+      next(e);
     }
-    req.admin = adminInfo;
-    next();
-  } catch (e) {
-    next(e);
   }
-};
 
-exports.auth = async (req, res, next) => {
-  try {
-  } catch (e) {}
-};
+  static async auth(req, res, next) {
+    try {
+      // Implement your logic here
+    } catch (e) {
+      next(e);
+    }
+  }
+}
 
-exports.auth = async (req, res, next) => {
-  try {
-  } catch (e) {}
-};
+module.exports = AuthMiddleware;

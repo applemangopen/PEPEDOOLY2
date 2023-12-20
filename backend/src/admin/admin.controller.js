@@ -2,7 +2,6 @@ const {
   AdminLoginRequestDTO,
   AdminInfoRequestDTO,
   AdminUpdateRequestDTO,
-  AdminDeleteRequestDTO,
 } = require("./dto/admin.dto");
 
 class AdminController {
@@ -18,9 +17,17 @@ class AdminController {
         httpOnly: true,
         path: "/",
       });
-      return res.send("");
+      return res.send({ token: token });
     } catch (e) {
       console.log("login Error", e);
+      next(e);
+    }
+  }
+  logout(req, res, next) {
+    try {
+      res.clearCookie("authorization", { path: "/", domain: "localhost" });
+      res.status(200).json({ message: "Logout successful" });
+    } catch (e) {
       next(e);
     }
   }
@@ -33,14 +40,8 @@ class AdminController {
 
   async putAdmin(req, res) {
     const adminData = req.admin;
-    const updatedAdmin = await this.adminService.updateAdmin(adminData);
+    const updatedAdmin = await this.service.updateAdmin(adminData);
     res.json(updatedAdmin);
-  }
-
-  async deleteAdmin(req, res) {
-    const adminDeleteRequestDTO = new AdminDeleteRequestDTO(req.admin);
-    await this.adminService.deleteAdmin(adminDeleteRequestDTO);
-    res.status(204).send();
   }
 }
 

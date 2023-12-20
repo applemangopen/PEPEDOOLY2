@@ -9,7 +9,7 @@ class AdminService {
     const admin = await this.admin.findOne({
       where: { Admin_id: adminLoginRequestDTO.adminId },
     });
-    /*     console.log(admin); */
+    console.log(admin);
     if (
       admin &&
       admin.dataValues.Admin_password === adminLoginRequestDTO.adminPassword
@@ -18,7 +18,6 @@ class AdminService {
         adminId: admin.dataValues.Admin_id,
         adminUid: admin.dataValues.Admin_uid,
       };
-      /*       console.log(jwtPayload); */
       const token = jwt.sign(jwtPayload);
       return token;
     } else {
@@ -48,12 +47,6 @@ class AdminService {
       where: { adminId: adminData.adminId },
     });
     return updatedAdmin;
-  }
-
-  async deleteAdmin(adminDeleteRequestDTO) {
-    await this.admin.destroy({
-      where: { Admin_uid: adminDeleteRequestDTO.adminUid },
-    });
   }
 }
 

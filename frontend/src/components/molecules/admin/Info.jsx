@@ -5,30 +5,67 @@ import styled from "styled-components";
 import { FormBtn } from "../../atoms/admin/FormBtn";
 import axios from "axios";
 
-const FieldContainer = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  align-items: center;
 `;
 
+const FieldContainerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; // 추가
+`;
+
+const FieldContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  gap: 0 120px;
+  justify-content: center;
+`;
+
+const FieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+`;
+
+const DeleteButton = (props) => (
+  <FormBtn {...props} background="red" color="white" />
+);
+
+const EditButton = (props) => (
+  <FormBtn {...props} background="#aeaeae" color="black" />
+);
 const Info = ({ isEdit, data }) => {
   console.log(data);
   const [isEditState, setIsEdit] = useState(isEdit);
   const [imageUrl, setImageUrl] = useState("");
-  const [fields, setFields] = useState([
-    { id: 1, value: data.Admin_id || "" },
-    { id: 2, value: data.Admin_name || "" },
-    { id: 3, value: data.Admin_nickname || "" },
-    { id: 4, value: "", isPassword: true },
-  ]);
+  const [fields, setFields] = useState(null);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    setFields([
-      { id: 1, value: data.Admin_id || "" },
-      { id: 2, value: data.Admin_name || "" },
-      { id: 3, value: data.Admin_nickname || "" },
-      { id: 4, value: "", isPassword: true },
-    ]);
+    if (data) {
+      setFields([
+        { id: 1, label: "", value: data.Admin_id || "" },
+        { id: 2, label: "", value: data.Admin_name || "" },
+        { id: 3, label: "", value: data.Admin_nickname || "" },
+        { id: 4, label: "", value: "", isPassword: true },
+      ]);
+    }
   }, [data]);
 
   const handleInputChangeLocal = (id, value) => {
@@ -67,31 +104,41 @@ const Info = ({ isEdit, data }) => {
   };
 
   return (
-    <FieldContainer>
-      <ProfileImage
-        onImageChange={handleImageChange}
-        imageUrl={imageUrl}
-        isEdit={isEditState}
-      />{" "}
-      {fields.map(
-        (field) =>
-          (!field.isPassword || isEditState) && (
-            <EditForm
-              key={field.id}
+    <>
+      <Container>
+        <FieldContainerWrapper>
+          <FieldContainer>
+            <ProfileImage
+              onImageChange={handleImageChange}
+              imageUrl={imageUrl}
               isEdit={isEditState}
-              labelContent={field.label}
-              onInputChange={(e) =>
-                handleInputChangeLocal(field.id, e.target.value)
-              }
-              inputValue={field.value}
             />
-          )
-      )}
-      <FormBtn onClick={handleEditClick}>
-        {isEditState ? "저장" : "수정"}
-      </FormBtn>
-    </FieldContainer>
+            <FieldWrapper>
+              {fields &&
+                fields.map(
+                  (field) =>
+                    (!field.isPassword || isEditState) && (
+                      <EditForm
+                        key={field.id}
+                        isEdit={isEditState}
+                        labelContent={field.label}
+                        onInputChange={(e) =>
+                          handleInputChangeLocal(field.id, e.target.value)
+                        }
+                        inputValue={field.value}
+                      />
+                    )
+                )}
+            </FieldWrapper>
+          </FieldContainer>
+        </FieldContainerWrapper>
+        <ButtonContainer>
+          <EditButton onClick={handleEditClick}>
+            {isEditState ? "저장" : "수정"}
+          </EditButton>{" "}
+        </ButtonContainer>
+      </Container>
+    </>
   );
 };
-
 export default Info;

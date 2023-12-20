@@ -6,6 +6,8 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
   position: relative;
   height: 100vh;
   padding: 20px;

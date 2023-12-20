@@ -15,11 +15,11 @@ class AdminLoginRequestDTO extends BaseDTO {
 }
 
 class AdminInfoRequestDTO extends BaseDTO {
-  adminId;
+  adminUid;
 
   constructor(admin) {
     super();
-    this.adminId = admin.Admin_id;
+    this.adminUid = admin.Admin_uid;
 
     this.validate(this, BadRequest);
   }
@@ -44,20 +44,8 @@ class AdminUpdateRequestDTO extends BaseDTO {
   }
 }
 
-class AdminDeleteRequestDTO extends BaseDTO {
-  adminId;
-
-  constructor(admin) {
-    super();
-    this.adminId = body.Admin_id;
-
-    this.validate(this, BadRequest);
-  }
-}
-
 module.exports = {
   AdminLoginRequestDTO,
   AdminInfoRequestDTO,
   AdminUpdateRequestDTO,
-  AdminDeleteRequestDTO,
 };
