@@ -10,7 +10,19 @@ const createBoard = async (boardData) => {
 };
 
 const getBoardById = async (id) => {
-  return await boardRepository.getBoardById(id);
+  const board = await boardRepository.getBoardById(id);
+  if (!board) return null;
+
+  // 조회수 증가
+  board.Board_views++;
+  await board.save();
+
+  return {
+    title: board.Boards_title,
+    content: board.Boards_content,
+    createdAt: board.Boards_created_at,
+    views: board.Board_views,
+  };
 };
 
 const updateBoard = async (id, boardData) => {

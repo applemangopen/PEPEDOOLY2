@@ -1,0 +1,38 @@
+.container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-size: 24px;
+  color: #333;
+}
+
+.userId,
+.createdAt {
+  font-size: 14px;
+  color: #666;
+}
+
+.content {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #666;
+}
