@@ -11,7 +11,6 @@ import MainComponent from "../organisms/main/Main";
 import Header from "../Layout/Header";
 import DashBoard from "./DashBoard";
 import { useUserState } from "../../hooks/useUserState";
-
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
@@ -71,7 +70,6 @@ const Main = () => {
         <Route path="/board/*" element={<Board />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/adminLogin" element={<AdminLogin />} />
-
         {/* 
       <Header />
       <Footer /> */}
