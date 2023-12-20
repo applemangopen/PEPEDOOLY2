@@ -39,7 +39,7 @@ function App() {
     console.log(loginData);
 
     axios
-      .post("http://localhost:4000/users/login/", loginData, {
+      .post("http://localhost:4000/users/login/login", loginData, {
         withCredentials: "include",
       })
       .then((response) => {

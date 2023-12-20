@@ -18,7 +18,7 @@ export const useLoginCheck = () => {
   const { setLoggedInUser } = useUserState();
   const loginCheckHandler = async () => {
     const { data: userData } = await axios.post(
-      "http://localhost:4000/users/loginCheck",
+      "http://localhost:4000/users/login/loginCheck",
       { data: "" },
       {
         withCredentials: true,

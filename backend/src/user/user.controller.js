@@ -23,15 +23,7 @@ class UserController {
       console.log("postSign", req.body);
       console.log("1");
       const userSignupRequestDTO = new UserSignupRequestDTO(req.body);
-<<<<<<< Updated upstream
-      console.log(userSignupRequestDTO);
 
-      const userSignupResponseDTO = await this.service.signup(
-        userSignupRequestDTO
-      );
-      // console.log(userSignupResponseDTO);
-      res.status(201).json(new Created(userSignupResponseDTO));
-=======
       console.log("2");
       // console.log(userSignupRequestDTO);
       const userSignupResponseDTO = await this.service.signup(
@@ -42,7 +34,6 @@ class UserController {
       res.status(201);
       console.log("4");
       res.end();
->>>>>>> Stashed changes
     } catch (e) {
       next(e);
     }
