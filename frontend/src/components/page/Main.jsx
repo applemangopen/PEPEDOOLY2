@@ -10,6 +10,7 @@ import Board from "../board/Board";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
+<<<<<<< Updated upstream
   return (
     <Routes>
       {/* <Route path="/" element={<Main />} /> */}
@@ -19,6 +20,67 @@ const Main = () => {
       <Route path="/comments" element={<Comments />} />
       <Route path="/board/*" element={<Board />} />
       {/* 
+=======
+  const { user } = useUserState();
+
+  const LoginRedirect = () => {
+    if (user.isLoggedIn) return <Navigate to={"/"} />;
+    return <Login />;
+  };
+  console.log("메인페이지 : ", user);
+
+  const headerHandler = () => {
+    return (
+      user &&
+      user.userData && (
+        <div>
+          메인페이지{" "}
+          {user && user.isLoggedIn && user.userData && (
+            <div>메인페이지 {user?.userData?.Users_nickname}</div>
+          )}
+        </div>
+      )
+    );
+  };
+  return (
+    <>
+      {/* <Header />
+      <div>
+        <div>
+          <div>
+            <img
+              src={process.env.PUBLIC_URL + "/assets/PepeDooly.svg"}
+              alt="PepeDoooly"
+              style={{ width: "700px", height: "700px" }}
+            />
+          </div>
+          <div>
+            이거슨 페페둘리입니다 최고의 커뮤니티 페페둘리와 당신의 밈과
+            밈토큰에 토론하세요!
+          </div>
+        </div>
+      </div> */}
+
+      {/* {user && user.userData && (
+        <div>
+          메인페이지{" "}
+          {user && user.isLoggedIn && user.userData && (
+            <div>메인페이지 {user?.userData?.Users_nickname}</div>
+          )}
+        </div>
+      )} */}
+      {/* {headerHandler()} */}
+      <Routes>
+        <Route path="/" element={<MainComponent />} />
+        <Route path="/login" element={<LoginRedirect />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/comments" element={<Comments />} />
+        <Route path="/board/*" element={<Board />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/adminLogin" element={<AdminLogin />} />
+        {/* 
+>>>>>>> Stashed changes
       <Header />
       <Footer /> */}
     </Routes>

@@ -41,7 +41,11 @@ function App() {
     console.log(signupData);
 
     axios
+<<<<<<< Updated upstream
       .post("http://localhost:4000/users/signup", signupData, {
+=======
+      .post("http://localhost:4000/users/singup", signupData, {
+>>>>>>> Stashed changes
         withCredentials: "include",
       })
       .then((response) => {
