@@ -4,7 +4,7 @@ const AdminController = require("./admin.controller");
 const db = require("../lib/db");
 const { Admin } = db;
 
-const adminSerivice = new AdminService(Admin);
-const adminController = new AdminController(adminSerivice);
+const adminService = new AdminService(Admin);
+const adminController = new AdminController(adminService);
 
 module.exports = { adminController };

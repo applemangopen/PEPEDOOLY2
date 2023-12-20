@@ -1,36 +1,120 @@
 import styled from "styled-components";
 import Button from "../atoms/login/Button";
-import Icon from "../atoms/login/Icon";
 import Input from "../atoms/login/Input";
-import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
-//FaInstagram
+import Header from "../Layout/Header";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 function App() {
-  const FacebookBackground =
-    "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
-  const FaGithubBackground = "#000000";
-  // "linear-gradient(to right, #000000 0%, #ED586C 40%, #F0A853 100%)";
-  const TwitterBackground =
-    "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [nickName, setNickname] = useState("");
+
+  function handleEmailChange(event) {
+    console.log(event.target.value);
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    console.log(event.target.value);
+    setPassword(event.target.value);
+  }
+
+  function handleNameChange(event) {
+    console.log(event.target.value);
+    setName(event.target.value);
+  }
+
+  function handleNickNameChange(event) {
+    console.log(event.target.value);
+    setNickname(event.target.value);
+  }
+
+  function signupUser(email, password, name, nickname) {
+    const signupData = {
+      email: email,
+      password: password,
+      name: name,
+      nickname: nickname,
+    };
+    console.log(signupData);
+
+    axios
+      .post("http://localhost:4000/users", signupData, {
+        withCredentials: "include",
+      })
+      .then((response) => {
+        // 회원가입 성공 시 처리
+        console.log("회원가입 성공", response.data);
+      })
+      .catch((error) => {
+        // 회원가입 실패 시 처리
+        console.error("회원가입 실패", error);
+      });
+  }
   return (
-    <MainContainer>
-      <WelcomeText>
-        <img src="./" alt="" />
-        PepeDooly
-      </WelcomeText>
-      <InputContainer>
-        <Input type="text" placeholder="Email" />
-        <Input type="password" placeholder="Password" />
-        <Input type="name" placeholder="Name" />
-        <Input type="nickname" placeholder="Nickname" />
-      </InputContainer>
-      <ButtonContainer>
-        <Button content="Register" />
-      </ButtonContainer>
-    </MainContainer>
+    <>
+      <MainContainer
+        onSubmit={(e) => {
+          e.preventDefault();
+          const {
+            email: userEmail,
+            password: userPassword,
+            name: userName,
+            nickname: userNickname,
+          } = e.target;
+          signupUser(
+            userEmail.value,
+            userPassword.value,
+            userName.value,
+            userNickname.value
+          );
+        }}
+      >
+        <WelcomeText>
+          <img src="./" alt="" />
+          PepeDooly
+        </WelcomeText>
+        <InputContainer>
+          <Input
+            type="text"
+            placeholder="Email"
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <Input
+            type="name"
+            placeholder="Name"
+            name="name"
+            value={name}
+            onChange={handleNameChange}
+          />
+          <Input
+            type="nickname"
+            placeholder="nickName"
+            name="nickname"
+            value={nickName}
+            onChange={handleNickNameChange}
+          />
+        </InputContainer>
+        <ButtonContainer>
+          <Button content="SignUp" />
+        </ButtonContainer>
+      </MainContainer>
+    </>
   );
 }
 
-const MainContainer = styled.div`
+const MainContainer = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -101,33 +185,6 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const LoginWith = styled.h5`
-  cursor: pointer;
-  color: green;
-`;
-
-const HorizontalRule = styled.hr`
-  width: 90%;
-  height: 0.3rem;
-  border-radius: 0.8rem;
-  border: none;
-  background: linear-gradient(to right, #14163c 0%, #03217b 79%);
-  background-color: #ebd0d0;
-  margin: 1.5rem 0 1rem 0;
-  backdrop-filter: blur(25px);
-`;
-
-const IconsContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  margin: 2rem 0 3rem 0;
-  width: 80%;
-`;
-
-const ForgotPassword = styled.h4`
-  cursor: pointer;
 `;
 
 export default App;

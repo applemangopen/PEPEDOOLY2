@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledLabel = styled.label`
-  width: 50%;
-  height: 40px;
+  width: 400px;
+  height: 50px;
   margin: 0 auto 20px;
   border: 1px solid black;
   border-radius: 5px;

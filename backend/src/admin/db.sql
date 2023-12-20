@@ -1,6 +1,5 @@
 CREATE TABLE `Admin` (
 	`Admin_uid`	int	NOT NULL	DEFAULT auto_increment,
-	`Users_uid`	int	NOT NULL,
 	`Admin_id`	varchar(255)	NOT NULL,
 	`Admin_password`	varchar(255)	NOT NULL,
 	`Admin_name`	varchar(255)	NOT NULL,

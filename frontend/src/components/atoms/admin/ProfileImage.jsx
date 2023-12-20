@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
 const StyledImg = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 300px;
+  height: 300px;
   border-radius: 20px;
 `;
 
-const ProfileImage = ({ onImageChange, user, isEdit }) => (
+const ProfileImage = ({ onImageChange, admin, isEdit }) => (
   <div>
-    {user && (
-      <StyledImg id="profile-img" class="user-pfp" src={user.Users_profile} />
+    {/* {admin && (
+      <StyledImg id="profile-img" class="user-pfp" src={admin.Admin_profile} />
     )}
-    {isEdit && <input type="file" onChange={onImageChange} />}
+    {isEdit && <input type="file" onChange={onImageChange} />} */}
+    <StyledImg src="/assets/cat.jpg" />
   </div>
 );
 
