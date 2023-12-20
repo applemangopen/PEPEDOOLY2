@@ -41,7 +41,7 @@ function App() {
     console.log(signupData);
 
     axios
-      .post("http://localhost:4000/users/signup", signupData, {
+      .post("http://localhost:4000/users", signupData, {
         withCredentials: "include",
       })
       .then((response) => {
@@ -55,7 +55,6 @@ function App() {
   }
   return (
     <>
-      <Header />
       <MainContainer
         onSubmit={(e) => {
           e.preventDefault();

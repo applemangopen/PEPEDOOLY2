@@ -14,6 +14,7 @@ class UserService {
   }
 
   async signup(requestDTO) {
+    console.log("service", requestDTO);
     try {
       const [user, isNewRecord] = await this.userRepository.findOrBuild({
         where: { Users_email: requestDTO.userEmail },
@@ -25,9 +26,13 @@ class UserService {
 
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(requestDTO.userPassword, salt);
+      console.log("pw : ", requestDTO.userPassword);
+      console.log("hash123", hash);
+      const temp = await bcrypt.compare(requestDTO.userPassword, hash);
+      console.log("temp gg", temp);
       user.Users_password = hash;
-      user.Users_name = "name";
-      user.Users_nickname = "nickname";
+      user.Users_name = requestDTO.userName;
+      user.Users_nickname = requestDTO.userNickname;
       user.Users_provider = "local";
       user.Users_created_at = Date.now();
       // user.Users_account_locked = true;
@@ -35,6 +40,7 @@ class UserService {
       // user.Users_profile = "/images/github%20logo.png";
       // user.Role_authority = "user";
 
+      console.log("service signup", user);
       const response = await user.save();
       console.log("회원가입응답:", response);
       const responseDTO = new UserSignupResponseDTO(response.dataValues);
@@ -66,27 +72,58 @@ class UserService {
         const result = await this.userRepository.findOne({
           where: {
             [Op.and]: [
-              { Users_id: userLoginRequestDTO.userEmail },
+              { Users_email: userLoginRequestDTO.userEmail },
               { Users_provider: "local" },
             ],
           },
         });
-        // console.log("result: ", result);
-        // if (result === null)
-        //   throw new BadRequest("아이디 혹은 비밀번호를 확인해 주세요.");
 
-        // const isPasswordCorrect = await bcrypt.compare(
-        //   userLoginRequestDTO.userPassword,
-        //   result.dataValues.Users_password
-        // );
-        // if (isPasswordCorrect === false)
-        //   throw new BadRequest("아이디 혹은 비밀번호를 확인해주세요.");
-        if (!result) return { message: "가입하지 않은 유저입니다." };
+        if (!result)
+          throw new BadRequest("이메일 혹은 비밀번호를 확인해 주세요.");
+
+        console.log("리저트", result);
+
+        console.log("sadasd", userLoginRequestDTO.userPassword);
+        console.log("333", result.dataValues.Users_password);
+        const isPasswordCorrect = await bcrypt.compare(
+          userLoginRequestDTO.userPassword,
+          result.dataValues.Users_password
+        );
+        // $2a$10$lTVfP10qY7WKOlUwMmc1f.r.rssKTMcK9ERgo7ulHZYrXSuA4DrUm
+        console.log("이즈패스워드", isPasswordCorrect);
+        if (!isPasswordCorrect)
+          throw new BadRequest("아이디 혹은 비밀번호를 확인해주세요.");
+
         const { dataValues: user } = result;
-        return setJWTToken(user);
+        console.log(result);
+        // const { Users_name, Users_nickname, Users_email } = result.dataValues;
+        // console.log(Users_name);
+        // console.log(Users_email);
+        // console.log(Users_nickname);
+
+        // Users.dataValues.Users_name;
+        // Users.dataValues.Users_nickname;
+        // Users.dataValues.Users_email;
+        // Users.dataValues.Users_nickname;
+
+        // if (!result) return;
+        // if (!result) return { message: "가입하지 않은 유저입니다." };
+
+        console.log("sethwt", setJWTToken(user));
+        return { userResult: result, token: setJWTToken(user) };
       }
     } catch (e) {
       console.log(e);
+      throw e;
+    }
+  }
+
+  async loginChecked(token) {
+    try {
+      return jwt.verify(token);
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
   }
 

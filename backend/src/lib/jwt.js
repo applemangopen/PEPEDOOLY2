@@ -35,7 +35,7 @@ class JWT {
     return Buffer.from(JSON.stringify(obj)).toString("base64url");
   }
   decode(base64) {
-    return JSON.parse(Buffer.from(base64, "base64").toString("utf-8"));
+    return JSON.parse(Buffer.from(base64, "base64url"));
   }
 
   createSignature(base64url) {

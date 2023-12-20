@@ -36,7 +36,7 @@ function AdminLogin() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("admin", true);
         localStorage.setItem("loggedIn", true);
-        navigate("/main");
+        navigate("/");
       })
       .catch((error) => {
         console.error("로그인 실패", error);

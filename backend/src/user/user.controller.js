@@ -24,10 +24,10 @@ class UserController {
       const userSignupRequestDTO = new UserSignupRequestDTO(req.body);
       console.log(userSignupRequestDTO);
 
-      const userSignupResponseDTO = new this.service.signup(
+      const userSignupResponseDTO = await this.service.signup(
         userSignupRequestDTO
       );
-      console.log(userSignupResponseDTO);
+      // console.log(userSignupResponseDTO);
       res.status(201).json(new Created(userSignupResponseDTO));
     } catch (e) {
       next(e);
@@ -39,8 +39,9 @@ class UserController {
       let code;
       let state;
       let userLoginRequestDTO;
+      let chekedToken;
       const provider = req.params.provider;
-      // console.log(provider);
+      console.log("프로바이더", provider);
       console.log("login", req.body);
 
       if (provider === "kakao") code = req.query.code;
@@ -48,20 +49,41 @@ class UserController {
       if (provider === "login") {
         userLoginRequestDTO = new UserLoginRequestDTO(req.body);
       }
+      if (provider === "loginCheck") {
+        console.log("니가만든쿠키", req.cookies.authorization);
+        chekedToken = req.cookies.authorization;
+        try {
+          if (chekedToken) {
+            const userData = await this.service.loginChecked(chekedToken);
+            return res.send(userData);
+          } else {
+            return res.send("쿠키 없음");
+          }
+        } catch (e) {
+          throw e;
+        }
+      }
+      console.log("controller-----", userLoginRequestDTO);
 
-      const token = await this.service.login(
+      const { userResult, token } = await this.service.login(
         provider,
         code,
         userLoginRequestDTO
       );
+      console.log("controller userresult", userResult);
+      console.log("controller token", token);
 
+      // console.log("login controller 토큰", token);
+      // if (token) return;
       // console.log("token:", "token");
       res.cookie("authorization", token, {
         maxAge: 60 * 60 * 1000,
         httpOnly: true,
         path: "/",
       });
-      return res.send("");
+      return res.send(userResult);
+      // return res.redirect("http://localhost:3000");
+      // return res.redircet(`localhost:3000?token=${token}`);
       // return res.redirect(
       //   `${PROTOCOL}://${process.env.FRONTEND_SERVER_IP}:${process.env.FRONTEND_SERVER_PORT}?token=${token}`
       // );

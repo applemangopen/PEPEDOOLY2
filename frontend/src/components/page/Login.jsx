@@ -7,13 +7,15 @@ import axios from "axios";
 import { FaFacebookF, FaTwitter, FaGithub } from "react-icons/fa";
 // import { SiWebtrees } from "react-icons/si";
 // import { Web3Auth } from "@web3auth/modal";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import Header from "../Layout/Header";
-//FaInstagram
+import { useUserState } from "../../hooks/useUserState";
+//FaInstagramrecoils
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const movePage = useNavigate();
+  const { setLoggedInUser } = useUserState();
 
   function handleEmailChange(event) {
     console.log(event.target.value);
@@ -29,19 +31,23 @@ function App() {
     movePage("/register");
   }
 
-  function loginUser(email, password) {
+  function loginUser() {
     const loginData = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
     console.log(loginData);
 
     axios
-      .post("http://localhost:4000/users/login", loginData, {
+      .post("http://localhost:4000/users/login/", loginData, {
         withCredentials: "include",
       })
       .then((response) => {
         // 로그인 성공 시 처리
+        setLoggedInUser(response.data);
+        console.log(response);
+
+        movePage("/");
         console.log("로그인 성공", response);
       })
       .catch((error) => {
@@ -62,8 +68,7 @@ function App() {
       <MainContainer
         onSubmit={(e) => {
           e.preventDefault();
-          const { email: userEmail, password: userPassword } = e.target;
-          loginUser(userEmail.value, userPassword.value);
+          loginUser();
         }}
       >
         <WelcomeText>
