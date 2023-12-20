@@ -28,17 +28,17 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
       // 대댓글부분임
-      ParentCommentId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: "Comments",
-          key: "Comments_uid",
-        },
-        foreignKey: {
-          name: "fk_parent_comment",
-        },
-      },
+      // ParentCommentId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      //   references: {
+      //     model: "Comments",
+      //     key: "Comments_uid",
+      //   },
+      //   foreignKey: {
+      //     name: "fk_parent_comment",
+      //   },
+      // },
     },
     {
       tableName: "Comments",

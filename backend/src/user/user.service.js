@@ -19,6 +19,8 @@ class UserService {
       const [user, isNewRecord] = await this.userRepository.findOrBuild({
         where: { Users_email: requestDTO.userEmail },
       });
+      console.log(user);
+      console.log(isNewRecord);
 
       if (!isNewRecord) throw new BadRequest("이미 존재하는 아이디 입니다.");
 
@@ -44,10 +46,10 @@ class UserService {
       const response = await user.save();
       console.log("회원가입응답:", response);
       const responseDTO = new UserSignupResponseDTO(response.dataValues);
-
+      // console.log(responseDTO);
       return responseDTO;
     } catch (e) {
-      throw e;
+      throw console.log(e.message);
     }
   }
 

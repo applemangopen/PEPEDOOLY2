@@ -16,19 +16,21 @@ const Main = () => {
   console.log("메인페이지 : ", user);
 
   const headerHandler = () => {
-    {
-      user && user.userData && (
+    return (
+      user &&
+      user.userData && (
         <div>
           메인페이지{" "}
           {user && user.isLoggedIn && user.userData && (
             <div>메인페이지 {user?.userData?.Users_nickname}</div>
           )}
         </div>
-      );
-    }
+      )
+    );
   };
   return (
     <>
+      {headerHandler()}
       <Header />
       <div>
         <div>
@@ -45,15 +47,6 @@ const Main = () => {
           </div>
         </div>
       </div>
-
-      {user && user.userData && (
-        <div>
-          메인페이지{" "}
-          {user && user.isLoggedIn && user.userData && (
-            <div>메인페이지 {user?.userData?.Users_nickname}</div>
-          )}
-        </div>
-      )}
     </>
   );
 };
