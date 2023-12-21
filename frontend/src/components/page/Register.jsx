@@ -41,7 +41,8 @@ function App() {
     console.log(signupData);
 
     axios
-      .post("http://localhost:4000/users", signupData, {
+
+      .post("http://localhost:4000/users/signup", signupData, {
         withCredentials: "include",
       })
       .then((response) => {

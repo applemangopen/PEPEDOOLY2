@@ -53,14 +53,6 @@ const Main = () => {
         </div>
       </div> */}
 
-      {user && user.userData && (
-        <div>
-          메인페이지{" "}
-          {user && user.isLoggedIn && user.userData && (
-            <div>메인페이지 {user?.userData?.Users_nickname}</div>
-          )}
-        </div>
-      )}
       <Routes>
         <Route path="/" element={<MainComponent />} />
         <Route path="/login" element={<LoginRedirect />} />

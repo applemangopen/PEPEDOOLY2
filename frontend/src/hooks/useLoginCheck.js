@@ -18,14 +18,16 @@ export const useLoginCheck = () => {
   const { setLoggedInUser } = useUserState();
   const loginCheckHandler = async () => {
     const { data: userData } = await axios.post(
-      "http://localhost:4000/users/loginCheck",
+      "http://localhost:4000/users/login/loginCheck",
       { data: "" },
       {
         withCredentials: true,
       }
     );
     console.log("검증데이터", userData);
-    if (typeof userData == "object") setLoggedInUser(userData);
+
+    if (typeof userData == "object") setLoggedInUser(userData.payload);
+
     // 값에따라 데이터를 바꾸든
     // 로그인 재유도를 해야함
   };

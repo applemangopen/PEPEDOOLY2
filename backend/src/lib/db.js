@@ -15,6 +15,7 @@ const sequelize = new Sequelize(
 
 const entityList = [
   `../admin/admin`,
+  `../user/user`,
   `../notice/notice`,
   // `../comment/comment`,
   "../user/user",

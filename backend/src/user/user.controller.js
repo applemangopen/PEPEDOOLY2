@@ -21,14 +21,19 @@ class UserController {
   async postSignup(req, res, next) {
     try {
       console.log("postSign", req.body);
+      console.log("1");
       const userSignupRequestDTO = new UserSignupRequestDTO(req.body);
-      console.log(userSignupRequestDTO);
 
+      console.log("2");
+      // console.log(userSignupRequestDTO);
       const userSignupResponseDTO = await this.service.signup(
         userSignupRequestDTO
       );
+      console.log("3");
       // console.log(userSignupResponseDTO);
-      res.status(201).json(new Created(userSignupResponseDTO));
+      res.status(201);
+      console.log("4");
+      res.end();
     } catch (e) {
       next(e);
     }
