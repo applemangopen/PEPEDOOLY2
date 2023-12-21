@@ -3,6 +3,7 @@ import EditForm from "../../molecules/admin/EditForm";
 import ProfileImage from "../../atoms/admin/ProfileImage";
 import styled from "styled-components";
 import { FormBtn } from "../../atoms/admin/FormBtn";
+import { useUserState } from "../../../hooks/useUserState";
 import axios from "axios";
 
 const Container = styled.div`
@@ -43,30 +44,27 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const DeleteButton = (props) => (
-  <FormBtn {...props} background="red" color="white" />
-);
-
 const EditButton = (props) => (
   <FormBtn {...props} background="#aeaeae" color="black" />
 );
-const Info = ({ isEdit, data }) => {
-  console.log(data);
+
+const Info = ({ isEdit }) => {
   const [isEditState, setIsEdit] = useState(isEdit);
   const [imageUrl, setImageUrl] = useState("");
-  const [fields, setFields] = useState(null);
-  const token = localStorage.getItem("token");
+  const [fields, setFields] = useState([]);
+  const { user } = useUserState();
+  const { Admin_id, Admin_name, Admin_nickname } = user.userData || {};
 
   useEffect(() => {
-    if (data) {
+    if (user) {
       setFields([
-        { id: 1, label: "", value: data.Admin_id || "" },
-        { id: 2, label: "", value: data.Admin_name || "" },
-        { id: 3, label: "", value: data.Admin_nickname || "" },
-        { id: 4, label: "", value: "", isPassword: true },
+        { id: 1, label: "Admin_id", value: Admin_id || "" },
+        { id: 2, label: "Admin_name", value: Admin_name || "" },
+        { id: 3, label: "Admin_nickname", value: Admin_nickname || "" },
+        { id: 4, label: "password", value: "", isPassword: true },
       ]);
     }
-  }, [data]);
+  }, [user]);
 
   const handleInputChangeLocal = (id, value) => {
     setFields(
@@ -76,10 +74,29 @@ const Info = ({ isEdit, data }) => {
 
   const handleEditClick = () => {
     if (isEditState) {
+      const formData = new FormData();
+      const file = document.querySelector('input[type="file"]').files[0];
+      if (file) {
+        formData.append("image", file);
+      }
+      formData.append("id", Admin_id);
+      formData.append("name", Admin_name);
+      fields.forEach((field) => {
+        if (field.label) {
+          formData.append(field.label, field.value);
+        }
+      });
+      console.log(formData);
+
       axios
-        .put(`/admin/edit`, fields)
+        .put(`http://localhost:4000/admin/edit`, formData)
         .then((response) => {
-          setFields(response.data);
+          // response.data가 배열인지 확인
+          if (Array.isArray(response.data)) {
+            setFields(response.data);
+          } else {
+            console.error("Error: response.data is not an array");
+          }
         })
         .catch((error) => {
           console.error("Error updating admin info:", error);
@@ -90,11 +107,16 @@ const Info = ({ isEdit, data }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (!file) {
+      console.error("No file selected");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("image", file);
-
+    console.log(formData);
     axios
-      .post(`/admin/${data}/image`, formData)
+      .post(`/admin/${Admin_id}/image`, formData)
       .then((response) => {
         setImageUrl(response.data.imageUrl);
       })

@@ -62,12 +62,19 @@ const MenuItem = styled.li`
   }
 `;
 
+const Logout = styled.button`
+  width: 70px;
+  height: 40px;
+`;
+
 const Header = () => {
   const navigate = useNavigate();
+
   const logout = async () => {
     try {
-      await axios.get("http://localhost:4000/admin/logout");
-      localStorage.clear();
+      await axios.get("http://localhost:4000/admin/logout", {
+        withCredentials: true,
+      });
       navigate("/");
     } catch (error) {
       console.error("로그아웃 요청 실패", error);
@@ -82,11 +89,7 @@ const Header = () => {
           alt="PepeDoooly"
         />
       </LogoLink>
-
-      <ul>
-        <li onClick={logout}>로그아웃</li>
-      </ul>
-
+      <Logout onClick={logout}>로그아웃</Logout>
       <RightMenu>
         <MenuItem>
           <Link to="/board">게시판</Link>

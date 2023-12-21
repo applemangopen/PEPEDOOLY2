@@ -8,11 +8,11 @@ const StyledImg = styled.img`
 
 const ProfileImage = ({ onImageChange, admin, isEdit }) => (
   <div>
-    {/* {admin && (
+    {admin && (
       <StyledImg id="profile-img" class="user-pfp" src={admin.Admin_profile} />
     )}
-    {isEdit && <input type="file" onChange={onImageChange} />} */}
-    <StyledImg src="/assets/cat.jpg" />
+    {isEdit && <input type="file" onChange={onImageChange} />}
+    {/* <StyledImg src="/assets/cat.jpg" /> */}
   </div>
 );
 
