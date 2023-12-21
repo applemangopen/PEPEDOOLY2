@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styles from "./List.module.css";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate를 사용
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import styles from "./List.module.css";
 
 export default function List() {
   const [posts, setPosts] = useState([]);
-  const navigate = useNavigate(); // useNavigate 훅 사용
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 8; // 페이지당 게시글 수
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPosts() {
@@ -19,18 +21,28 @@ export default function List() {
     fetchPosts();
   }, []);
 
-  const handleCreateButtonClick = () => {
-    navigate("/board/create"); // 페이지 이동을 위해 useNavigate 함수 사용
-  };
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className={styles.board}>
       <h1>게시판</h1>
-      <button className={styles.createButton} onClick={handleCreateButtonClick}>
+      <button
+        className={styles.createButton}
+        onClick={() => navigate("/board/create")}
+      >
         글 작성하기
       </button>
       <div className={styles.posts}>
-        {posts.map((post) => (
+        {currentPosts.map((post) => (
           <div key={post.Boards_id} className={styles.post}>
             <Link to={`/board/view/${post.Boards_id}`}>
               <h2 className={styles.title}>{post.Boards_title}</h2>
@@ -43,6 +55,20 @@ export default function List() {
           </div>
         ))}
       </div>
+      <nav>
+        <ul className={styles.pagination}>
+          {pageNumbers.map((number) => (
+            <li key={number} className={styles.pageItem}>
+              <button
+                onClick={() => paginate(number)}
+                className={styles.pageLink}
+              >
+                {number}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }
