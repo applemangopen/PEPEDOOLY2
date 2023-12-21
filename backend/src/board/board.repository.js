@@ -10,6 +10,8 @@ const createBoard = async (boardData) => {
 };
 
 const getBoardById = async (id) => {
+  // const returnData = await Board.findByPk(id);
+  // console.log("board.repository getBoardById : ", returnData);
   return await Board.findByPk(id);
 };
 

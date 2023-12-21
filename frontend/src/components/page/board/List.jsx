@@ -1,35 +1,50 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import styles from "./List.module.css";
-import { Link } from "react-router-dom";
-import axios from "axios"; // axios 추가
 
 export default function List() {
   const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 8; // 페이지당 게시글 수
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await axios.get("http://localhost:8000/boards");
-        // 성공적으로 데이터를 가져온 경우, 데이터를 상태로 설정합니다.
+        const response = await axios.get("http://localhost:4000/boards");
         setPosts(response.data);
       } catch (error) {
-        // 데이터 가져오기 실패 시 오류 처리를 할 수 있습니다.
         console.error("Error fetching data:", error);
       }
     }
-
-    // 데이터를 가져오는 함수를 호출합니다.
     fetchPosts();
   }, []);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(posts.length / postsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className={styles.board}>
       <h1>게시판</h1>
+      <button
+        className={styles.createButton}
+        onClick={() => navigate("/board/create")}
+      >
+        글 작성하기
+      </button>
       <div className={styles.posts}>
-        {posts.map((post) => (
+        {currentPosts.map((post) => (
           <div key={post.Boards_id} className={styles.post}>
             <Link to={`/board/view/${post.Boards_id}`}>
-              {/* 이미지 및 게시물 정보를 렌더링하는 코드 */}
               <h2 className={styles.title}>{post.Boards_title}</h2>
             </Link>
             <div className={styles["post-info"]}>
@@ -40,6 +55,20 @@ export default function List() {
           </div>
         ))}
       </div>
+      <nav>
+        <ul className={styles.pagination}>
+          {pageNumbers.map((number) => (
+            <li key={number} className={styles.pageItem}>
+              <button
+                onClick={() => paginate(number)}
+                className={styles.pageLink}
+              >
+                {number}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }
