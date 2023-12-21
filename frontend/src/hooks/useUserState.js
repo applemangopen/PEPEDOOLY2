@@ -14,7 +14,9 @@ import { useEffect } from "react";
 
 export function useUserState() {
   const [user, setUser] = useRecoilState(userState);
-
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const setLoggedInUser = (userData) => {
     setUser({ isLoggedIn: true, userData });
   };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Admin from "./Admin";
@@ -11,6 +11,7 @@ import MainComponent from "../organisms/main/Main";
 import Header from "../Layout/Header";
 import DashBoard from "./DashBoard";
 import { useUserState } from "../../hooks/useUserState";
+import UserDash from "./UserDash";
 // import Footer from "../Layout/Footer";
 
 const Main = () => {
@@ -20,7 +21,9 @@ const Main = () => {
     if (user.isLoggedIn) return <Navigate to={"/"} />;
     return <Login />;
   };
-  console.log("메인페이지 : ", user);
+  useEffect(() => {
+    console.log("메인페이지 : ", user);
+  }, []);
 
   const headerHandler = () => {
     {
@@ -55,6 +58,7 @@ const Main = () => {
 
       <Routes>
         <Route path="/" element={<MainComponent />} />
+        <Route path="/userDash" element={<UserDash />} />
         <Route path="/login" element={<LoginRedirect />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/register" element={<Register />} />
