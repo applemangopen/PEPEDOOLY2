@@ -52,16 +52,17 @@ const Info = ({ isEdit }) => {
   const [isEditState, setIsEdit] = useState(isEdit);
   const [imageUrl, setImageUrl] = useState("");
   const [fields, setFields] = useState([]);
-  const { user } = useUserState();
-  const { Admin_id, Admin_name, Admin_nickname } = user.userData || {};
-
+  const { user, setLoggedInUser } = useUserState();
+  const { Admin_id, Admin_name, Admin_nickname, Admin_uid } =
+    (user && user.userData) || {};
   useEffect(() => {
+    console.log(user);
     if (user) {
       setFields([
         { id: 1, label: "Admin_id", value: Admin_id || "" },
         { id: 2, label: "Admin_name", value: Admin_name || "" },
         { id: 3, label: "Admin_nickname", value: Admin_nickname || "" },
-        { id: 4, label: "password", value: "", isPassword: true },
+        { id: 4, label: "Admin_password", value: "", isPassword: true },
       ]);
     }
   }, [user]);
@@ -81,22 +82,19 @@ const Info = ({ isEdit }) => {
       }
       formData.append("id", Admin_id);
       formData.append("name", Admin_name);
+      formData.append("uid", Admin_uid);
       fields.forEach((field) => {
         if (field.label) {
           formData.append(field.label, field.value);
         }
       });
-      console.log(formData);
-
       axios
-        .put(`http://localhost:4000/admin/edit`, formData)
+        .put(`http://localhost:4000/admin/edit`, formData, {
+          withCredentials: true,
+        })
         .then((response) => {
-          // response.data가 배열인지 확인
-          if (Array.isArray(response.data)) {
-            setFields(response.data);
-          } else {
-            console.error("Error: response.data is not an array");
-          }
+          setFields(response.data);
+          setLoggedInUser(response.data);
         })
         .catch((error) => {
           console.error("Error updating admin info:", error);
@@ -107,16 +105,15 @@ const Info = ({ isEdit }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log(file);
     if (!file) {
       console.error("No file selected");
       return;
     }
-
     const formData = new FormData();
     formData.append("image", file);
-    console.log(formData);
     axios
-      .post(`/admin/${Admin_id}/image`, formData)
+      .post(`http://localhost:4000/admin/image`, formData)
       .then((response) => {
         setImageUrl(response.data.imageUrl);
       })
@@ -132,7 +129,7 @@ const Info = ({ isEdit }) => {
           <FieldContainer>
             <ProfileImage
               onImageChange={handleImageChange}
-              imageUrl={imageUrl}
+              admin={user && user.userData}
               isEdit={isEditState}
             />
             <FieldWrapper>

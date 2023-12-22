@@ -1,5 +1,4 @@
 const { Op, where } = require("sequelize");
-const bcrypt = require("bcryptjs");
 const JWT = require("../lib/jwt");
 const jwt = new JWT();
 const { BadRequest } = require("../lib/customException");
@@ -49,9 +48,23 @@ class AdminService {
   async updateAdmin(adminData) {
     try {
       await this.admin.update(
-        { Admin_profile: adminData.Admin_profile, ...adminData },
-        { where: { Admin_id: adminData.id } }
+        {
+          Admin_profile: adminData.Admin_profile,
+          ...adminData,
+        },
+        {
+          where: {
+            Admin_uid: adminData.uid,
+          },
+        }
       );
+      const result = await this.admin.findOne({
+        where: {
+          Admin_uid: adminData.uid,
+        },
+      });
+      const { dataValues: admin } = result;
+      return { updatedAdmin: result, token: setJWTToken(admin) };
     } catch (error) {
       console.error("Error updating admin info:", error);
       throw error;

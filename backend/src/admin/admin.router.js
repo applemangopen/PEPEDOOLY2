@@ -18,7 +18,7 @@ adminRouter.put(
   upload.single("image"),
   putAdmin
 );
-adminRouter.post("/:id/image", upload.single("image"), (req, res) => {
+adminRouter.post("/image", upload.single("image"), (req, res) => {
   if (!req.file) {
     return res
       .status(400)

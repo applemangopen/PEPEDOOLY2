@@ -14,16 +14,9 @@ const PageContainer = styled.div`
 const Admin = () => {
   const [menu, setMenu] = useState("info");
   const navigate = useNavigate();
-  const { user } = useUserState();
-  const { setLoggedInUser } = useUserState();
+  const { user, setLoggedInUser } = useUserState();
 
-  useEffect(() => {
-    if (user && user.isLoggedIn) {
-      setLoggedInUser({ isLoggedIn: true });
-    } else {
-      setLoggedInUser({ isLoggedIn: false });
-    }
-  }, [user.isLoggedIn]);
+  useEffect(() => {}, [user]);
   return (
     <>
       <Header />
